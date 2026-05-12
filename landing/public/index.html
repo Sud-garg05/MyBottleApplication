@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyBottle — Your Bottle. Your Rules.</title>
+  <meta name="description" content="MyBottle is a digital bottle wallet for clubs. Reserve a bottle, consume across visits, track every pour. Own your night." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav" aria-label="Main navigation">
+    <a href="#" class="nav-logo" id="nav-logo-link">MyBottle</a>
+    <div class="nav-links">
+      <a href="#how-it-works" id="nav-how">How it works</a>
+      <a href="#for-clubs" id="nav-clubs">For clubs</a>
+      <a href="#early-access" id="nav-cta" class="nav-cta-btn">Get early access</a>
+    </div>
+  </nav>
+
+  <!-- CINEMATIC SCROLL STORY -->
+  <section id="story" aria-label="How MyBottle works">
+    <div id="story-sticky">
+      <!-- Scene canvas -->
+      <div id="scene-container">
+
+        <!-- SCENE 0: Club floor — buying the bottle -->
+        <div class="scene" id="scene-0">
+          <div class="scene-bg bg-club"></div>
+          <div class="club-lights">
+            <div class="light l1"></div>
+            <div class="light l2"></div>
+            <div class="light l3"></div>
+          </div>
+          <div class="scene-content">
+            <div class="scene-label" id="s0-label">Saturday night. Bangalore.</div>
+            <div class="scene-headline" id="s0-head">You just ordered the bottle.</div>
+            <div class="scene-sub" id="s0-sub">JW Black Label. 5 servings. Paid in full.</div>
+          </div>
+          <div class="physical-bottle" id="phys-bottle">
+            <svg viewBox="0 0 80 220" xmlns="http://www.w3.org/2000/svg" id="bottle-svg">
+              <defs>
+                <linearGradient id="bottle-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:oklch(35% 0.04 55)"/>
+                  <stop offset="40%" style="stop-color:oklch(50% 0.08 58)"/>
+                  <stop offset="100%" style="stop-color:oklch(28% 0.03 55)"/>
+                </linearGradient>
+                <linearGradient id="liquid-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:oklch(60% 0.14 62);stop-opacity:0.9"/>
+                  <stop offset="100%" style="stop-color:oklch(38% 0.1 60);stop-opacity:0.95"/>
+                </linearGradient>
+              </defs>
+              <!-- Bottle neck -->
+              <rect x="33" y="10" width="14" height="30" rx="4" fill="url(#bottle-grad)"/>
+              <!-- Bottle cap -->
+              <rect x="31" y="5" width="18" height="12" rx="3" fill="oklch(72% 0.12 60)"/>
+              <!-- Bottle body -->
+              <path d="M18 40 Q15 60 15 90 L15 185 Q15 200 40 200 Q65 200 65 185 L65 90 Q65 60 62 40 Z" fill="url(#bottle-grad)"/>
+              <!-- Liquid inside -->
+              <path id="liquid-fill" d="M20 100 Q18 110 18 130 L18 185 Q18 196 40 196 Q62 196 62 185 L62 130 Q62 110 60 100 Z" fill="url(#liquid-grad)" opacity="0.85"/>
+              <!-- Label -->
+              <rect x="22" y="110" width="36" height="55" rx="3" fill="oklch(95% 0.02 60)" opacity="0.15"/>
+              <text x="40" y="133" text-anchor="middle" font-size="5" fill="oklch(88% 0.06 60)" font-family="Syne, sans-serif" font-weight="700">JW</text>
+              <text x="40" y="142" text-anchor="middle" font-size="4" fill="oklch(78% 0.04 60)" font-family="Syne, sans-serif">BLACK LABEL</text>
+              <!-- Shine -->
+              <path d="M25 48 Q26 70 26 120" stroke="oklch(80% 0.06 60)" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- SCENE 1: Bottle going digital -->
+        <div class="scene" id="scene-1">
+          <div class="scene-bg bg-digital"></div>
+          <div class="scene-content">
+            <div class="scene-label" id="s1-label">But wait.</div>
+            <div class="scene-headline" id="s1-head">You don't have to carry it home.</div>
+            <div class="scene-sub" id="s1-sub">MyBottle captures your bottle digitally. Every pour tracked. Your balance safe.</div>
+          </div>
+          <div class="phone-wrapper" id="phone-wrapper">
+            <div class="phone-frame" id="phone-frame">
+              <div class="phone-screen" id="phone-screen">
+                <div class="app-ui" id="app-ui">
+                  <div class="app-header">MyBottle</div>
+                  <div class="app-bottle-card" id="app-bottle-card">
+                    <div class="app-brand-name">JW Black Label</div>
+                    <div class="serving-dots" id="serving-dots">
+                      <span class="dot filled" id="d1"></span>
+                      <span class="dot filled" id="d2"></span>
+                      <span class="dot filled" id="d3"></span>
+                      <span class="dot filled" id="d4"></span>
+                      <span class="dot filled" id="d5"></span>
+                    </div>
+                    <div class="app-servings-label">5 servings remaining</div>
+                    <div class="qr-placeholder" id="qr-code">
+                      <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" width="60" height="60">
+                        <rect x="5" y="5" width="20" height="20" fill="none" stroke="oklch(72% 0.12 60)" stroke-width="2"/>
+                        <rect x="9" y="9" width="12" height="12" fill="oklch(72% 0.12 60)"/>
+                        <rect x="35" y="5" width="20" height="20" fill="none" stroke="oklch(72% 0.12 60)" stroke-width="2"/>
+                        <rect x="39" y="9" width="12" height="12" fill="oklch(72% 0.12 60)"/>
+                        <rect x="5" y="35" width="20" height="20" fill="none" stroke="oklch(72% 0.12 60)" stroke-width="2"/>
+                        <rect x="9" y="39" width="12" height="12" fill="oklch(72% 0.12 60)"/>
+                        <rect x="35" y="35" width="5" height="5" fill="oklch(72% 0.12 60)"/>
+                        <rect x="43" y="35" width="5" height="5" fill="oklch(72% 0.12 60)"/>
+                        <rect x="35" y="43" width="5" height="5" fill="oklch(72% 0.12 60)"/>
+                        <rect x="43" y="50" width="12" height="5" fill="oklch(72% 0.12 60)"/>
+                        <rect x="50" y="35" width="5" height="12" fill="oklch(72% 0.12 60)"/>
+                      </svg>
+                    </div>
+                    <div class="app-expiry">Valid 90 days · Tap to redeem</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Particle burst on transformation -->
+          <div class="particle-burst" id="particle-burst"></div>
+        </div>
+
+        <!-- SCENE 2: Phone into pocket, person walks away -->
+        <div class="scene" id="scene-2">
+          <div class="scene-bg bg-exit"></div>
+          <div class="club-lights dim">
+            <div class="light l1"></div>
+            <div class="light l2"></div>
+          </div>
+          <div class="scene-content">
+            <div class="scene-label" id="s2-label">You're done for tonight.</div>
+            <div class="scene-headline" id="s2-head">Your bottle's in your pocket.</div>
+            <div class="scene-sub" id="s2-sub">Come back whenever. 4 servings waiting.</div>
+          </div>
+          <div class="person-walking" id="person-walking">
+            <!-- Silhouette person -->
+            <svg viewBox="0 0 120 280" xmlns="http://www.w3.org/2000/svg" id="person-svg">
+              <!-- Head -->
+              <circle cx="60" cy="30" r="18" fill="oklch(25% 0.02 55)"/>
+              <!-- Body -->
+              <path d="M45 48 L38 130 L55 130 L60 95 L65 130 L82 130 L75 48 Z" fill="oklch(22% 0.015 55)"/>
+              <!-- Phone in hand going into pocket -->
+              <g id="phone-in-hand">
+                <rect x="68" y="100" width="18" height="28" rx="3" fill="oklch(18% 0.01 55)" id="hand-phone"/>
+                <rect x="70" y="102" width="14" height="22" rx="2" fill="oklch(30% 0.03 60)" id="hand-screen"/>
+              </g>
+              <!-- Legs walking -->
+              <g id="legs">
+                <path id="leg-l" d="M50 130 L44 200 L52 200 L60 155 Z" fill="oklch(20% 0.015 55)"/>
+                <path id="leg-r" d="M70 130 L76 200 L68 200 L60 155 Z" fill="oklch(20% 0.015 55)"/>
+              </g>
+              <!-- Arm -->
+              <path id="arm-r" d="M75 55 Q90 80 85 110" stroke="oklch(22% 0.015 55)" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <path d="M45 55 Q30 80 35 110" stroke="oklch(22% 0.015 55)" stroke-width="10" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Progress indicator -->
+        <div class="scroll-progress" id="scroll-progress">
+          <div class="prog-dot active" id="prog-0" title="At the club"></div>
+          <div class="prog-line"></div>
+          <div class="prog-dot" id="prog-1" title="Goes digital"></div>
+          <div class="prog-line"></div>
+          <div class="prog-dot" id="prog-2" title="Into pocket"></div>
+        </div>
+
+        <!-- Scroll hint -->
+        <div class="scroll-hint" id="scroll-hint">
+          <span>scroll to continue</span>
+          <div class="scroll-arrow">↓</div>
+        </div>
+      </div>
+    </div>
+    <!-- Scroll spacer: 300vh for 3 scenes -->
+    <div style="height:300vh"></div>
+  </section>
+
+  <!-- HERO TITLE (after scroll story) -->
+  <section id="hero-reveal" class="hero-reveal-section">
+    <div class="reveal-inner">
+      <p class="reveal-eyebrow">The digital bottle wallet</p>
+      <h1 class="reveal-headline">Your Bottle.<br/>Your Rules.</h1>
+      <p class="reveal-body">Reserve a full bottle at your favourite club. Consume across visits. Track every pour. No wastage. No trust issues. Just ownership.</p>
+      <a href="#early-access" class="cta-primary" id="hero-cta">Claim your spot</a>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="how-section">
+    <div class="section-inner">
+      <p class="section-eyebrow">Simple by design</p>
+      <h2 class="section-title">One bottle. Five visits.</h2>
+      <div class="steps-flow">
+        <div class="step" id="step-1">
+          <div class="step-num">01</div>
+          <div class="step-body">
+            <h3>Reserve</h3>
+            <p>Pay for a full bottle entitlement through the app. UPI, card, done. The club confirms instantly.</p>
+          </div>
+        </div>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step" id="step-2">
+          <div class="step-num">02</div>
+          <div class="step-body">
+            <h3>Redeem</h3>
+            <p>Show your QR at the bar. Bartender scans. Pour happens. Balance updates. No cash, no bill, no wait.</p>
+          </div>
+        </div>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step" id="step-3">
+          <div class="step-num">03</div>
+          <div class="step-body">
+            <h3>Return</h3>
+            <p>Come back any night within 90 days. Your servings are waiting exactly where you left them.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE: CUSTOMER -->
+  <section id="customer-value" class="value-section">
+    <div class="value-inner">
+      <div class="value-text">
+        <p class="section-eyebrow">For you, the customer</p>
+        <h2>Stop paying peg price for a bottle you already own.</h2>
+        <p class="value-body">5 pegs bought one by one costs you <strong>25% more</strong> than reserving the bottle upfront. MyBottle locks in the bottle price and protects every sip you paid for.</p>
+        <ul class="value-list">
+          <li>No physical storage at the club (no trust needed)</li>
+          <li>Real-time notification on every redemption</li>
+          <li>Dispute protection with full redemption logs</li>
+          <li>Secure, transparent, yours</li>
+        </ul>
+      </div>
+      <div class="value-visual">
+        <div class="comparison-card" id="comparison-card">
+          <div class="comp-row">
+            <span class="comp-label">5 pegs at club</span>
+            <span class="comp-amount loss">₹6,250</span>
+          </div>
+          <div class="comp-divider"></div>
+          <div class="comp-row highlight">
+            <span class="comp-label">MyBottle reservation</span>
+            <span class="comp-amount save">₹5,000</span>
+          </div>
+          <div class="comp-saving">You save ₹1,250 per bottle</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR CLUBS -->
+  <section id="for-clubs" class="clubs-section">
+    <div class="section-inner">
+      <p class="section-eyebrow">For clubs</p>
+      <h2 class="section-title">Turn dead inventory into a retention engine.</h2>
+      <div class="clubs-grid">
+        <div class="club-stat" id="cs-1">
+          <div class="stat-figure">5×</div>
+          <p>More visits per bottle reservation vs. a single-night sale</p>
+        </div>
+        <div class="club-stat" id="cs-2">
+          <div class="stat-figure">85%</div>
+          <p>Customer retention target — vs. 32% industry average</p>
+        </div>
+        <div class="club-stat" id="cs-3">
+          <div class="stat-figure">3 steps</div>
+          <p>Redemption flow vs. 6-step cash transaction at the bar</p>
+        </div>
+      </div>
+      <p class="clubs-sub">Upfront payment. Guaranteed return visits. Breakage revenue when servings go unredeemed. Zero inventory risk.</p>
+    </div>
+  </section>
+
+  <!-- TRUST SECTION -->
+  <section id="trust-section" class="trust-section">
+    <div class="trust-inner">
+      <div class="trust-text">
+        <p class="section-eyebrow">Built for trust</p>
+        <h2>Every pour is yours alone to authorize.</h2>
+        <p>Only you can generate the QR code to redeem a serving. The club cannot deduct from your balance. Every redemption triggers an instant push notification. Disputes are reviewed against a full log: timestamp, location, device.</p>
+      </div>
+      <div class="trust-steps" id="trust-steps">
+        <div class="trust-step ts-1">
+          <div class="ts-icon">◉</div>
+          <span>You open the app and generate QR</span>
+        </div>
+        <div class="trust-step ts-2">
+          <div class="ts-icon">⊞</div>
+          <span>Bartender scans, no cash changes hands</span>
+        </div>
+        <div class="trust-step ts-3">
+          <div class="ts-icon">✦</div>
+          <span>Instant notification: "1 serving redeemed"</span>
+        </div>
+        <div class="trust-step ts-4">
+          <div class="ts-icon">◈</div>
+          <span>Balance updated, log stored permanently</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDERS -->
+  <section id="founders" class="founders-section">
+    <div class="section-inner">
+      <p class="section-eyebrow">Who built this</p>
+      <h2 class="section-title">From people who lived the problem.</h2>
+      <p class="founders-story">"We went to a club, consumed half of 2 bottles, didn't want to carry them home. Had to buy pegs. Went back 2 weeks later to the same club — had to buy pegs again. It cost us significantly more than if we could have just reserved the bottle and come back for it."</p>
+      <div class="founders-grid">
+        <div class="founder-card" id="founder-1">
+          <div class="founder-initial">S</div>
+          <div class="founder-info">
+            <strong>Sudarshan Garg</strong>
+            <span>Co-founder, Product &amp; Business</span>
+            <p>12 years in software. 8 years running events in Bangalore. Direct relationships with club owners across the city.</p>
+          </div>
+        </div>
+        <div class="founder-card" id="founder-2">
+          <div class="founder-initial">H</div>
+          <div class="founder-info">
+            <strong>Hargobind</strong>
+            <span>Co-founder, Technology</span>
+            <p>Startup founder shipping products for global clients. Expertise in blockchain, AI, and consumer-facing systems.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EARLY ACCESS CTA -->
+  <section id="early-access" class="cta-section">
+    <div class="cta-inner">
+      <p class="section-eyebrow">Pre-launch</p>
+      <h2 class="cta-headline">Be first in the club.</h2>
+      <p class="cta-body">MyBottle is launching in Bangalore. Join the waitlist for early access — customers and clubs both welcome.</p>
+      <form id="waitlist-form" class="waitlist-form" novalidate>
+        <div class="form-row">
+          <input type="text" id="wl-name" name="name" placeholder="Your name" autocomplete="name" required />
+          <input type="email" id="wl-email" name="email" placeholder="your@email.com" autocomplete="email" required />
+          <select id="wl-type" name="type" required>
+            <option value="" disabled selected>I am a...</option>
+            <option value="customer">Customer</option>
+            <option value="club">Club owner</option>
+          </select>
+          <button type="submit" id="wl-submit">Join waitlist</button>
+        </div>
+        <div id="form-success" class="form-success" hidden>
+          You're on the list. We'll be in touch before launch.
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer" class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">MyBottle</span>
+        <p>Digital bottle wallet for nightlife. Bangalore, India.</p>
+      </div>
+      <div class="footer-taglines">
+        <span>Own It. Store It. Pour It.</span>
+      </div>
+      <div class="footer-legal">
+        <p>MyBottle is a technology platform. It does not sell, distribute, or own alcohol. All alcohol is owned and served by licensed venues. Age 21+ only.</p>
+        <p>&copy; 2025 MyBottle. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
