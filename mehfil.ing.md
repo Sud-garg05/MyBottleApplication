@@ -1,12 +1,12 @@
 # Mehfil — Master Context Document
-> mehfil.bar | The Status & Community Layer of India's Nightlife
+> mehfil.ing | The Status & Community Layer of India's Nightlife
 
 ---
 
 ## 1. Brand Identity
 
 **Name:** Mehfil
-**Domain:** mehfil.bar
+**Domain:** mehfil.ing
 **Tagline:** Your Night. Your People. Your Bottle.
 **Positioning:** Not a nightlife app. The social and status layer India's nightlife never had.
 **One-liner:** Mehfil is where India's nightlife community lives — reserve premium bottles, build your nightlife identity, and find your people.
