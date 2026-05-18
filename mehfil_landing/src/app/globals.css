@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-black: #050506;
+  --color-brand-charcoal: #0e0e11;
+  --color-brand-gray: #1a1a22;
+  --color-brand-teal: oklch(74.54% 0.16 166.57); /* Teal/Emerald accent */
+  --color-brand-gold: oklch(82.26% 0.11 86.42); /* Soft Champagne Gold */
+  
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-syne), system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --background: #050506;
+  --foreground: #f3f4f6;
+}
+
+/* Custom Base Styles */
+html {
+  scroll-behavior: auto;
+}
+
+html, body {
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Custom Selection style */
+::selection {
+  background-color: oklch(74.54% 0.16 166.57 / 20%);
+  color: oklch(74.54% 0.16 166.57);
+}
+
+/* Scrollbar Style */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050506;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a1a22;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(82.26% 0.11 86.42 / 30%);
+}
+
+/* Immersive Glow Utils */
+.glow-teal {
+  box-shadow: 0 0 40px -5px oklch(74.54% 0.16 166.57 / 15%);
+}
+
+.glow-gold {
+  box-shadow: 0 0 40px -5px oklch(82.26% 0.11 86.42 / 12%);
+}
+
+.text-glow-gold {
+  text-shadow: 0 0 12px oklch(82.26% 0.11 86.42 / 35%);
+}
+
+.text-glow-teal {
+  text-shadow: 0 0 12px oklch(74.54% 0.16 166.57 / 35%);
+}
+
+/* ✅ FIX: Added missing text-glow-red utility */
+.text-glow-red {
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.40);
+}
+
+/* Premium Border Gradient effect */
+.gold-card-gradient {
+  background: linear-gradient(135deg, rgba(14,14,17,0.85) 0%, rgba(26,26,34,0.7) 100%);
+  border: 1px solid rgba(245, 196, 83, 0.1);
+  transition: border-color 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+.gold-card-gradient:hover {
+  border-color: rgba(245, 196, 83, 0.25);
+  box-shadow: 0 10px 30px -10px oklch(82.26% 0.11 86.42 / 8%);
+}
+
+.teal-card-gradient {
+  background: linear-gradient(135deg, rgba(14,14,17,0.85) 0%, rgba(26,26,34,0.7) 100%);
+  border: 1px solid rgba(45, 212, 191, 0.08);
+  transition: border-color 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+.teal-card-gradient:hover {
+  border-color: rgba(45, 212, 191, 0.2);
+  box-shadow: 0 10px 30px -10px oklch(74.54% 0.16 166.57 / 10%);
+}
+
+/* Hide default ScrollTrigger indicators */
+.gsap-marker-start, .gsap-marker-end, .gsap-marker-scroller-start, .gsap-marker-scroller-end {
+  display: none !important;
+}
+
+/* Smooth transitions */
+.transition-cubic {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ✅ FIX: Added missing animate-spin-slow utility */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* ✅ FIX: Select dropdown arrow styling (since appearance-none removes native arrow) */
+.select-arrow {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
