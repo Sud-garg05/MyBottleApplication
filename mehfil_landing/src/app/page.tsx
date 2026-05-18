@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="w-full flex flex-col bg-brand-black overflow-x-hidden">
+      <main className="w-full flex flex-col bg-brand-black overflow-x-clip">
         <Hero />
         <Problem />
         <MagicScroll />
