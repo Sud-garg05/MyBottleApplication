@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mehfil — Investor Pitch Deck (Pre-Seed)</title>
+  
+  <!-- SEO & Brand Meta -->
+  <meta name="description" content="Mehfil — The Social & Status Layer India's Nightlife Never Had. Raising ₹1.5 Crore Pre-Seed presentation.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #06040a;
+      --bg-card: rgba(18, 14, 28, 0.65);
+      --bg-card-hover: rgba(26, 20, 38, 0.85);
+      --border-color: rgba(223, 183, 108, 0.15);
+      --border-glow: rgba(223, 183, 108, 0.3);
+      --text-main: #f5f3f7;
+      --text-muted: #9f9aa9;
+      
+      /* Mehfil Gold Palette */
+      --gold-light: #f7e2b8;
+      --gold: #dfb76c;
+      --gold-dark: #c39241;
+      --gold-gradient: linear-gradient(135deg, #f7e2b8 0%, #dfb76c 50%, #c39241 100%);
+      --gold-glow: 0 0 25px rgba(223, 183, 108, 0.3);
+      
+      /* Accents */
+      --accent-purple: #8b5cf6;
+      --accent-purple-light: #a78bfa;
+      --accent-purple-gradient: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+      --accent-red: #ef4444;
+      --accent-green: #10b981;
+      --accent-blue: #3b82f6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 5% 15%, rgba(124, 58, 237, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 95% 85%, rgba(223, 183, 108, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, #06040a 0%, #0d0a14 100%);
+      color: var(--text-main);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* Presentation Wrapper */
+    .presentation-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2.2rem;
+    }
+
+    /* Header Controls */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 100;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+
+    .brand-logo svg {
+      width: 28px;
+      height: 28px;
+      fill: url(#goldGradientLogo);
+    }
+
+    .deck-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--gold-light);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    /* Navigation Sidebar / List Toggler */
+    .menu-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
+    }
+
+    .menu-btn:hover {
+      background: rgba(223, 183, 108, 0.1);
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+
+    /* Slide Arena */
+    .slide-viewport {
+      flex: 1;
+      width: 100%;
+      max-width: 1100px;
+      margin: 1rem 0;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+      pointer-events: none;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    /* Slide Content Typo & Structures */
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+    }
+
+    .slide-title-wrapper {
+      margin-bottom: 1.5rem;
+    }
+
+    .slide-eyebrow {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .slide-h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #ffffff 0%, #dedede 50%, #b3afb8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      max-width: 900px;
+    }
+
+    .slide-h1 span.highlight {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: var(--gold-glow);
+    }
+
+    .slide-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0.75rem auto 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Grid Layouts & Cards */
+    .slide-grid {
+      display: grid;
+      gap: 1.25rem;
+      width: 100%;
+      margin-top: 0.75rem;
+    }
+
+    .col-2 { grid-template-columns: repeat(2, 1fr); }
+    .col-3 { grid-template-columns: repeat(3, 1fr); }
+    .col-4 { grid-template-columns: repeat(4, 1fr); }
+    .col-5 { grid-template-columns: repeat(5, 1fr); }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.75rem;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(223, 183, 108, 0.4);
+      background: var(--bg-card-hover);
+      box-shadow: 0 12px 40px 0 rgba(223, 183, 108, 0.08);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      transition: background 0.35s ease;
+    }
+
+    .card.accent-gold::before { background: var(--gold-gradient); }
+    .card.accent-purple::before { background: var(--accent-purple-gradient); }
+    .card.accent-red::before { background: var(--accent-red); }
+    .card.accent-green::before { background: var(--accent-green); }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .card-stat {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .card-stat.red { color: var(--accent-red); }
+    .card-stat.green { color: var(--accent-green); }
+
+    /* Custom Presentation Elements */
+    .quote-block {
+      background: rgba(223, 183, 108, 0.04);
+      border-left: 4px solid var(--gold);
+      border-radius: 4px 16px 16px 4px;
+      padding: 1.25rem 1.75rem;
+      font-style: italic;
+      color: var(--text-main);
+      font-size: 1.1rem;
+      line-height: 1.55;
+      text-align: left;
+      max-width: 800px;
+      margin: 1rem auto;
+      position: relative;
+    }
+
+    .quote-author {
+      display: block;
+      font-style: normal;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-top: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Comparison Table Design */
+    .table-container {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: rgba(18, 14, 28, 0.4);
+      margin-top: 0.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(223, 183, 108, 0.08);
+      padding: 1rem 1.25rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      color: var(--gold-light);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 0.9rem 1.25rem;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Process steps flow */
+    .flow-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-number {
+      width: 28px;
+      height: 28px;
+      background: var(--gold-gradient);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--bg-dark);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin: 0 auto 0.5rem auto;
+      box-shadow: 0 0 8px rgba(223, 183, 108, 0.4);
+    }
+
+    .flow-title {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .flow-arrow {
+      color: var(--gold);
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    /* Tab Switcher Interface */
+    .tabs-nav {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      padding: 0.3rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+    }
+
+    .tab-trigger {
+      padding: 0.55rem 1.25rem;
+      border-radius: 100px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .tab-trigger.active {
+      background: var(--gold-gradient);
+      color: var(--bg-dark);
+      font-weight: 700;
+      box-shadow: var(--gold-glow);
+    }
+
+    .tab-content {
+      width: 100%;
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.35s ease forwards;
+    }
+
+    /* Footer Controls */
+    footer {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 100;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      background: var(--gold-gradient);
+      color: var(--bg-dark);
+      border-color: var(--gold);
+      box-shadow: var(--gold-glow);
+    }
+
+    .nav-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .slide-indicators {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .indicator.active {
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      width: 20px;
+      border-radius: 100px;
+    }
+
+    .progress-bar-container {
+      width: 120px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-left: 1rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--gold-gradient);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+
+    /* Index Nav Menu */
+    .slide-menu {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 320px;
+      height: 100%;
+      background: rgba(13, 9, 24, 0.95);
+      border-left: 1px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide-menu.open {
+      right: 0;
+    }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.75rem;
+    }
+
+    .menu-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      color: var(--gold-light);
+    }
+
+    .menu-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    .menu-close:hover {
+      color: var(--accent-red);
+    }
+
+    .menu-items {
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding-right: 0.5rem;
+    }
+
+    /* Custom scrollbar for menu */
+    .menu-items::-webkit-scrollbar {
+      width: 4px;
+    }
+    .menu-items::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .menu-items::-webkit-scrollbar-thumb {
+      background: rgba(223, 183, 108, 0.2);
+      border-radius: 10px;
+    }
+
+    .menu-item {
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      text-align: left;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .menu-item:hover, .menu-item.active {
+      background: rgba(223, 183, 108, 0.08);
+      border-color: rgba(223, 183, 108, 0.2);
+      color: var(--gold-light);
+    }
+
+    .menu-item.active {
+      border-color: var(--gold);
+      font-weight: 600;
+    }
+
+    .backdrop-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(3px);
+    }
+
+    .backdrop-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Custom visual features */
+    .status-highlight-container {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background: radial-gradient(circle at center, rgba(223, 183, 108, 0.06) 0%, transparent 80%);
+      border: 1px solid rgba(223, 183, 108, 0.15);
+      border-radius: 20px;
+      padding: 2rem;
+      width: 100%;
+      text-align: left;
+    }
+
+    .phone-mockup-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .phone-mockup {
+      width: 170px;
+      height: 330px;
+      background: #0f0b18;
+      border: 6px solid #231c34;
+      border-radius: 24px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 15px rgba(223, 183, 108, 0.15);
+      display: flex;
+      flex-direction: column;
+      padding: 0.85rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-notch {
+      width: 70px;
+      height: 12px;
+      background: #231c34;
+      border-radius: 0 0 10px 10px;
+      margin: -0.85rem auto 0.5rem auto;
+    }
+
+    .phone-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: space-between;
+      padding: 0.25rem 0;
+    }
+
+    .gold-qr-card {
+      border: 1px solid var(--gold);
+      background: linear-gradient(135deg, rgba(223,183,108,0.15) 0%, rgba(13,9,24,0.9) 100%);
+      padding: 0.85rem;
+      border-radius: 12px;
+      text-align: center;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: var(--gold-glow);
+    }
+
+    .phone-qr-svg {
+      width: 80px;
+      height: 80px;
+      fill: var(--gold);
+      background: #ffffff;
+      padding: 0.3rem;
+      border-radius: 8px;
+    }
+
+    .phone-qr-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .phone-qr-sub {
+      font-size: 0.55rem;
+      color: var(--text-muted);
+    }
+
+    .bubble-notification {
+      position: absolute;
+      bottom: 20px;
+      left: -20px;
+      background: rgba(139, 92, 246, 0.95);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.65rem;
+      width: 200px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      animation: float 3s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    /* Keyframe Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Stack Visualization for product layers */
+    .stack-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .stack-layer {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: rgba(18, 14, 28, 0.4);
+    }
+
+    .stack-layer:hover {
+      border-color: rgba(223, 183, 108, 0.4);
+      background: rgba(26, 20, 38, 0.6);
+      transform: scale(1.01);
+    }
+
+    .stack-layer.layer-3 {
+      border-color: rgba(139, 92, 246, 0.3);
+      box-shadow: inset 0 0 15px rgba(139, 92, 246, 0.05);
+    }
+    .stack-layer.layer-3:hover {
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+    }
+
+    .stack-layer.layer-2 {
+      border-color: rgba(59, 130, 246, 0.3);
+      box-shadow: inset 0 0 15px rgba(59, 130, 246, 0.05);
+    }
+    .stack-layer.layer-2:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+    }
+
+    .stack-layer.layer-1 {
+      border-color: rgba(223, 183, 108, 0.3);
+      box-shadow: inset 0 0 15px rgba(223, 183, 108, 0.05);
+    }
+    .stack-layer.layer-1:hover {
+      border-color: var(--gold);
+      box-shadow: var(--gold-glow);
+    }
+
+    .stack-num {
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      opacity: 0.15;
+    }
+
+    .stack-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .stack-layer.layer-3 .stack-title { color: var(--accent-purple-light); }
+    .stack-layer.layer-2 .stack-title { color: var(--accent-blue); }
+    .stack-layer.layer-1 .stack-title { color: var(--gold-light); }
+
+    .stack-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      max-width: 90%;
+    }
+
+    /* 2x2 Competitive Matrix */
+    .matrix-container {
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      grid-template-rows: 40px 1fr 40px;
+      width: 100%;
+      height: 380px;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .matrix-axis-y {
+      grid-column: 1;
+      grid-row: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .matrix-axis-x {
+      grid-column: 2;
+      grid-row: 3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+
+    .matrix-core {
+      grid-column: 2;
+      grid-row: 2;
+      border: 1px dashed rgba(255,255,255,0.1);
+      position: relative;
+      background: rgba(255,255,255,0.01);
+      border-radius: 8px;
+    }
+
+    .matrix-line-x {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .matrix-line-y {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      height: 100%;
+      width: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .matrix-label {
+      position: absolute;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 0.35rem;
+    }
+    .label-top { top: 5px; left: 50%; transform: translateX(-50%); }
+    .label-bottom { bottom: 5px; left: 50%; transform: translateX(-50%); }
+    .label-left { left: 5px; top: 50%; transform: translateY(-50%); }
+    .label-right { right: 5px; top: 50%; transform: translateY(-50%); }
+
+    .competitor {
+      position: absolute;
+      padding: 0.5rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+    }
+
+    .competitor.mehfil {
+      background: var(--gold-gradient);
+      border-color: var(--gold);
+      color: var(--bg-dark);
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: var(--gold-glow);
+      z-index: 10;
+    }
+    .competitor.mehfil svg { fill: var(--bg-dark); }
+    .competitor svg { width: 14px; height: 14px; fill: currentColor; }
+
+    /* Competitors position map */
+    .pos-mehfil { top: 20%; right: 15%; }
+    .pos-zomato { bottom: 25%; left: 10%; }
+    .pos-dineout { bottom: 35%; left: 35%; }
+    .pos-discotech { top: 30%; left: 20%; }
+    .pos-instagram { bottom: 15%; right: 25%; }
+
+    /* Fund Allocation pie/grid details */
+    .fund-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-color);
+      padding: 0.85rem 1.25rem;
+      border-radius: 10px;
+    }
+
+    .fund-pct {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--gold);
+      width: 50px;
+    }
+
+    .fund-bar-outer {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .fund-bar-inner {
+      height: 100%;
+      border-radius: 10px;
+    }
+
+    /* Responsive Overrides */
+    @media (max-width: 900px) {
+      .presentation-container { padding: 1.25rem; }
+      .slide-h1 { font-size: 2.1rem; }
+      .col-2, .col-3, .col-4, .col-5 { grid-template-columns: 1fr; }
+      .flow-container { flex-direction: column; gap: 1.25rem; }
+      .flow-arrow { transform: rotate(90deg); margin: 0.25rem 0; }
+      .status-highlight-container { flex-direction: column; text-align: center; }
+      .phone-mockup-wrapper { margin-top: 1rem; }
+      body { overflow: auto; height: auto; }
+      .slide { position: relative; display: none; height: auto; opacity: 1; transform: none; pointer-events: auto; padding: 1.5rem 0; }
+      .slide.active { display: flex; }
+      .slide-viewport { height: auto; }
+      .matrix-container { height: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reusable SVG Defs for Gradients/Logos -->
+  <svg style="position: absolute; width: 0; height: 0;" width="0" height="0">
+    <defs>
+      <linearGradient id="goldGradientLogo" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f7e2b8" />
+        <stop offset="50%" stop-color="#dfb76c" />
+        <stop offset="100%" stop-color="#c39241" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="presentation-container">
+    
+    <!-- Top Header Navigation Bar -->
+    <header>
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24">
+          <path d="M7 2h10v2H7V2zm11 5v4c0 3.31-2.69 6-6 6s-6-2.69-6-6V7h12m1-2H5v2h14V5zm-4 13h-2v3h4v-1h-2v-2zm-6 0v2H6v1h4v-3H9z" />
+        </svg>
+        <span>MEHFIL</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <span class="deck-badge">Pre-Seed Pitch</span>
+        <button class="menu-btn" id="menuBtn">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+          </svg>
+          Index
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dynamic Slides Viewport -->
+    <div class="slide-viewport">
+
+      <!-- SLIDE 1: Title / Hook -->
+      <section class="slide active" data-slide-index="0">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">PRE-SEED INVESTOR DECK</span>
+          <h1 class="slide-h1">Every Night in India, Thousands of <span class="highlight">Premium Bottles</span> Are Opened.</h1>
+          <p class="slide-desc" style="font-size: 1.25rem;">By Monday, nobody remembers who drank them, why they came, or how to bring them back.</p>
+        </div>
+        <div class="quote-block" style="text-align: center; max-width: 650px; font-weight: 500;">
+          "We turn every bottle into a status moment, every status moment into a viral loop, and every visit into a permanent piece of your nightlife identity."
+        </div>
+        <div style="margin-top: 1rem; font-family: 'Outfit'; font-size: 1.1rem; color: var(--gold-light);">
+          ✨ Raising ₹1.5 Cr Pre-Seed • Runway: 12-15 Months
+        </div>
+      </section>
+
+      <!-- SLIDE 2: Why Mehfil? -->
+      <section class="slide" data-slide-index="1">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">BRAND CONTEXT</span>
+          <h1 class="slide-h1">The Gathering is <span class="highlight">Digital Now.</span></h1>
+          <p class="slide-desc">Not a booking app. Not a listing database. The social and status layer India's premium nightlife never had.</p>
+        </div>
+        <div class="slide-grid col-3">
+          <div class="card accent-gold">
+            <h4 class="card-title">✨ Meaning of "Mehfil"</h4>
+            <p class="card-text">An Urdu word for an intimate gathering of people who share music, celebration, and presence. Not a generic party. A moment. A community.</p>
+          </div>
+          <div class="card accent-purple">
+            <h4 class="card-title">🎫 Taste DNA & Identity</h4>
+            <p class="card-text">We map and catalog physical nightlife preferences, providing high-status clubgoers with a permanent passport built on their visits and shares.</p>
+          </div>
+          <div class="card accent-green">
+            <h4 class="card-title">⚡ High-Prestige Growth</h4>
+            <p class="card-text">We digitize elite consumption. We convert premium drink-sharing circles into transaction-anchored growth loops that cost absolute zero CAC.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: The Problem -->
+      <section class="slide" data-slide-index="2">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">THE SYSTEM PROBLEM</span>
+          <h1 class="slide-h1">Clubs Leak Margin. <span class="highlight">Customers Leak Capital.</span></h1>
+          <p class="slide-desc">Nightlife remains completely offline and transactional, leading to inefficiencies on both sides.</p>
+        </div>
+        <div class="slide-grid col-2">
+          <div class="card accent-red">
+            <h4 class="card-title" style="color: #fca5a5;">🏢 The Club Pain (Leaky Operations)</h4>
+            <p class="card-text" style="margin-bottom: 0.75rem;">Premium inventory sits dead on shelves, locking up valuable liquidity. High Customer Acquisition Costs (₹2,000–₹5,000) are wasted on a poor return visit rate (~32%). Midweek demand collapses by 60-70%.</p>
+            <div style="font-family: 'Outfit'; font-size: 0.85rem; font-weight: 700; color: var(--accent-red);">
+              🚨 68% OF FIRST-TIME CUSTOMERS NEVER RETURN
+            </div>
+          </div>
+          <div class="card accent-red">
+            <h4 class="card-title" style="color: #fca5a5;">👤 The Customer Pain (Wasted Value)</h4>
+            <p class="card-text" style="margin-bottom: 0.75rem;">Buying by the peg costs 20% more than buying a full bottle, but groups rarely finish a bottle in a single night. Leaving physical bottles at a club lacks security and digital trust. Nights out leave no permanent trace.</p>
+            <div style="font-family: 'Outfit'; font-size: 0.85rem; font-weight: 700; color: var(--accent-red);">
+              🚨 WHO FINISHES A ENTIRE BOTTLE IN ONE NIGHT?
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: The Insight -->
+      <section class="slide" data-slide-index="3">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">THE INSIGHT MOAT</span>
+          <h1 class="slide-h1">Liquor Bottles Are <span class="highlight">Multi-Visit Assets.</span></h1>
+          <p class="slide-desc">Traditional nightlife treats bottles as simple, single-use transactions. Mehfil treats them as structural loops.</p>
+        </div>
+        <div class="status-highlight-container" style="background: rgba(223, 183, 108, 0.03);">
+          <div style="flex: 1;">
+            <div style="font-family: 'Outfit'; font-size: 1.8rem; font-weight: 800; color: var(--gold-light); margin-bottom: 0.75rem;">
+              Clubs sell bottles. Mehfil turns them into relationships.
+            </div>
+            <p class="card-text" style="font-size: 1rem; margin-bottom: 1.5rem;">
+              Instead of selling a bottle once and losing touch, we map a brand-level serving entitlement digitally. The customer receives better value, while the club locks in five separate visits, multiplier upsells, and permanent brand loyalty.
+            </p>
+            <div style="display: flex; gap: 2rem;">
+              <div>
+                <span style="font-family: 'Outfit'; font-size: 1.75rem; font-weight: 800; color: var(--accent-purple-light);">1 Bottle</span>
+                <span style="display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Traditional Visit</span>
+              </div>
+              <div style="border-left: 1px solid var(--border-color); padding-left: 2rem;">
+                <span style="font-family: 'Outfit'; font-size: 1.75rem; font-weight: 800; color: var(--gold);">5 Visits + Data</span>
+                <span style="display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Mehfil Retention Loop</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: Product Architecture -->
+      <section class="slide" data-slide-index="4">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">PRODUCT STACK</span>
+          <h1 class="slide-h1">Three Stacked Layers. <span class="highlight">Maximum Defensibility.</span></h1>
+          <p class="slide-desc">We stack core utility, identity passport, and community social networks to build an unbeatable network effect.</p>
+        </div>
+        
+        <div class="stack-container">
+          <div class="stack-layer layer-3">
+            <div class="stack-num">03</div>
+            <div class="stack-title">THE COMMUNITY LAYER (Moat)</div>
+            <p class="stack-text">Verified reviews tied to transactions, real-time local Night Boards, interest Tribes, and Legends leaderboards. The social network you show up to build.</p>
+          </div>
+          <div class="stack-layer layer-2">
+            <div class="stack-num">02</div>
+            <div class="stack-title">THE IDENTITY LAYER (Lock-in)</div>
+            <p class="stack-text">A permanent Nightlife Passport mapping visit history, dynamic Pour Scores (behavioral trust rating), and AI-derived Taste DNA. High switching cost.</p>
+          </div>
+          <div class="stack-layer layer-1">
+            <div class="stack-num">01</div>
+            <div class="stack-title">THE WALLET LAYER (Core Utility)</div>
+            <p class="stack-text">Reserve brand entitlements, pay 100% upfront via app, scan dynamic gold QR codes at the bar, and track remaining servings instantly. Frictionless checkout.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: The Money Moment (Viral Loop) -->
+      <section class="slide" data-slide-index="5">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">ORGANIC ACQUISITION</span>
+          <h1 class="slide-h1">The "Status Performance" <span class="highlight">Viral Loop.</span></h1>
+          <p class="slide-desc">We don't buy users with discount ads. We construct premium transaction triggers that spread naturally at the table.</p>
+        </div>
+        <div class="slide-grid col-3">
+          <div class="card accent-gold">
+            <div class="card-stat">₹0 CAC</div>
+            <h4 class="card-title">Public table status</h4>
+            <p class="card-text">Opening a gold QR, getting verified, and pouring premium drinks in front of friends acts as powerful social proof. Creates immediate viral curiosity: <em>"Bro, what's that app?"</em></p>
+          </div>
+          <div class="card accent-purple">
+            <div class="card-stat">>0.5 K</div>
+            <h4 class="card-title">"Buy a Friend a Drink"</h4>
+            <p class="card-text">Gifting single serving entitlements directly to friends inside the app forms a powerful viral loop. Recipients must download the mobile app to redeem their drink.</p>
+          </div>
+          <div class="card accent-green">
+            <div class="card-stat">Instagram</div>
+            <h4 class="card-title">"Morning After Card"</h4>
+            <p class="card-text">System automatically compiles high-prestige stats, saves, and check-ins into beautifully polished, shareable story formats. High organic social spread.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: Market Opportunity -->
+      <section class="slide" data-slide-index="6">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">MARKET OPPORTUNITY</span>
+          <h1 class="slide-h1">$30B Market. <span class="highlight">Perfect Timing.</span></h1>
+          <p class="slide-desc">Strong secular tailwinds: UPI adoption, a massive premiumization wave, and complete digitizing lag in nightlife.</p>
+        </div>
+        <div class="slide-grid col-2">
+          <div style="display: flex; flex-direction: column; gap: 1rem; justify-content: center; text-align: left;">
+            <div style="border-left: 3px solid var(--gold); padding-left: 1rem;">
+              <span style="font-family: 'Outfit'; font-size: 1.8rem; font-weight: 800; color: var(--gold-light);">TAM: $30B</span>
+              <p class="card-text">Total India bars and nightlife ecosystem market size projected by 2030.</p>
+            </div>
+            <div style="border-left: 3px solid var(--accent-purple-light); padding-left: 1rem;">
+              <span style="font-family: 'Outfit'; font-size: 1.8rem; font-weight: 800; color: var(--accent-purple-light);">SAM: $3B</span>
+              <p class="card-text">Premium clubs & bottle-service spending across Tier 1 metropolitan cities.</p>
+            </div>
+            <div style="border-left: 3px solid var(--accent-green); padding-left: 1rem;">
+              <span style="font-family: 'Outfit'; font-size: 1.8rem; font-weight: 800; color: var(--accent-green);">SOM: $30M</span>
+              <p class="card-text">Our targeted 1% capture of Sam in Tier 1 cities by Year 3 operations.</p>
+            </div>
+          </div>
+          <div class="card accent-gold" style="display: flex; flex-direction: column; justify-content: center;">
+            <h4 class="card-title">📈 Premiumization Acceleration</h4>
+            <p class="card-text" style="margin-bottom: 0.75rem;">Premium and craft spirits consumption is growing at <strong>27% CAGR</strong> in India. Urban Gen Z and Millennial audiences are trading up to premium single malts, craft gins, and prestige tequila. They crave status, cataloged experiences, and community.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: Business Model -->
+      <section class="slide" data-slide-index="7">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">MONETIZATION FLYWHEEL</span>
+          <h1 class="slide-h1">Transaction Fee Today. <span class="highlight">Brand Dollars Tomorrow.</span></h1>
+          <p class="slide-desc">We do not sell SaaS to clubs. We build a high-density verified audience distillery brands will pay premium dollars to target.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+          <div class="tabs-nav">
+            <button class="tab-trigger active" onclick="switchTab(event, 'revenueStreams')">Monetization Streams</button>
+            <button class="tab-trigger" onclick="switchTab(event, 'revenueTrajectory')">12-Month Projections</button>
+          </div>
+
+          <!-- Revenue Streams -->
+          <div id="revenueStreams" class="tab-content active">
+            <div class="slide-grid col-3">
+              <div class="card accent-gold">
+                <h4 class="card-title">Phase 1: Transactions</h4>
+                <p class="card-text">5-10% flat transaction fee baked into every bottle entitlement. Plus Expiry Rescue extension fees (₹150-300) collected on unredeemed servings.</p>
+              </div>
+              <div class="card accent-purple">
+                <h4 class="card-title">Phase 2: Premium SaaS</h4>
+                <p class="card-text">Club featured placement bids, performance marketing commissions for filling midweek tables, and premium consumer subscriptions (₹299-499/mo) for priority Drop access.</p>
+              </div>
+              <div class="card accent-green">
+                <h4 class="card-title">Phase 3: Brand Layer</h4>
+                <p class="card-text">Distillery sponsored drops, taste profile cohort marketing, sponsored community event ticketing, and hyper-targeted taste data licensing for FMCG giants.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Projections Trajectory -->
+          <div id="revenueTrajectory" class="tab-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Month Timeline</th>
+                    <th>GMV Targets</th>
+                    <th>Txn Fee Revenue</th>
+                    <th>Premium & Performance</th>
+                    <th>Brand Partnerships</th>
+                    <th style="color: var(--gold-light);">Total Monthly Net</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Month 3 (Pilot Phase)</td>
+                    <td>₹5,00,000</td>
+                    <td>₹40,000</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td style="font-weight: 600;">₹40,000</td>
+                  </tr>
+                  <tr>
+                    <td>Month 6 (Expansion)</td>
+                    <td>₹20,00,000</td>
+                    <td>₹1,60,000</td>
+                    <td>₹50,000</td>
+                    <td>—</td>
+                    <td style="font-weight: 600;">₹2,10,000</td>
+                  </tr>
+                  <tr>
+                    <td>Month 9 (Scale-up)</td>
+                    <td>₹40,00,000</td>
+                    <td>₹3,20,000</td>
+                    <td>₹1,50,000</td>
+                    <td>₹1,00,000</td>
+                    <td style="font-weight: 600;">₹5,70,000</td>
+                  </tr>
+                  <tr style="background: rgba(223, 183, 108, 0.08);">
+                    <td><strong>Month 12 (Launch Matrix)</strong></td>
+                    <td><strong>₹75,00,000</strong></td>
+                    <td><strong>₹6,00,000</strong></td>
+                    <td><strong>₹3,00,000</strong></td>
+                    <td><strong>₹4,00,000</strong></td>
+                    <td style="color: var(--gold); font-weight: 800;">₹13,00,000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: Unit Economics -->
+      <section class="slide" data-slide-index="8">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">UNIT ECONOMICS</span>
+          <h1 class="slide-h1">A High-Margin Flywheel. <span class="highlight">Proven LTV:CAC > 4:1.</span></h1>
+          <p class="slide-desc">Everyone wins inside our transactional unit structure. High retention unlocks structural lifetime value.</p>
+        </div>
+        <div class="slide-grid col-4">
+          <div class="card accent-gold">
+            <span class="card-stat">₹400</span>
+            <h4 class="card-title">Pre-tax Gross Cut</h4>
+            <p class="card-text">Calculated on a standard mid-tier ₹5,000 reservation at 8% average platform fee.</p>
+          </div>
+          <div class="card accent-purple">
+            <span class="card-stat">₹300</span>
+            <h4 class="card-title">Net Unit Revenue</h4>
+            <p class="card-text">Retained revenue per booking after payment aggregator gateway and server operational costs.</p>
+          </div>
+          <div class="card accent-red">
+            <span class="card-stat">&lt; ₹1,500</span>
+            <h4 class="card-title">Target CAC</h4>
+            <p class="card-text">Acquisition cost minimized through venue-led onboarding & viral table references.</p>
+          </div>
+          <div class="card accent-green">
+            <span class="card-stat">&gt; ₹6,000</span>
+            <h4 class="card-title">Estimated LTV</h4>
+            <p class="card-text">Driven by repeat bottle purchases, expiration recoveries, and community events.</p>
+          </div>
+        </div>
+        <p class="slide-desc" style="margin-top: 1rem; font-weight: 600;">
+          💡 Expiration breakage represents pure profit for partner venues, converting 100% of unredeemed servings into gross margins.
+        </p>
+      </section>
+
+      <!-- SLIDE 10: Competitive Landscape -->
+      <section class="slide" data-slide-index="9">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">COMPETITIVE POSITIONING</span>
+          <h1 class="slide-h1">Creating a New Category. <span class="highlight">No Direct Rivals.</span></h1>
+          <p class="slide-desc">Discovery directories (Zomato) and booking engines operate at venue-level listings, leaving product SKU inventory completely unmapped.</p>
+        </div>
+        
+        <div style="display: flex; width: 100%; align-items: center; justify-content: center; gap: 2rem;">
+          <!-- 2x2 Interactive/Visual Matrix -->
+          <div class="matrix-container">
+            <!-- Labels X -->
+            <div class="matrix-axis-x">Transactional Depth (SKU Level)</div>
+            <!-- Labels Y -->
+            <div class="matrix-axis-y">Nightlife Focus & Identity</div>
+            
+            <div class="matrix-core">
+              <div class="matrix-line-x"></div>
+              <div class="matrix-line-y"></div>
+              <span class="matrix-label label-top">High Identity</span>
+              <span class="matrix-label label-bottom">Low Identity</span>
+              <span class="matrix-label label-left">Listing Only</span>
+              <span class="matrix-label label-right">SKU Wallet</span>
+              
+              <!-- Plot items -->
+              <div class="competitor mehfil pos-mehfil">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg> Mehfil
+              </div>
+              <div class="competitor pos-zomato">Zomato</div>
+              <div class="competitor pos-dineout">Dineout</div>
+              <div class="competitor pos-discotech">Discotech</div>
+              <div class="competitor pos-instagram">Instagram</div>
+            </div>
+          </div>
+
+          <div style="flex: 1; text-align: left; display: flex; flex-direction: column; gap: 1rem;">
+            <h4 style="font-family: 'Outfit'; color: var(--gold-light); font-size: 1.25rem;">Our 4-Layer Moat</h4>
+            <div style="font-size: 0.9rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.75rem;">
+              <p><strong>1. Active Entitlements:</strong> Users with prepaid servings locked in a club cannot switch platforms without losing value.</p>
+              <p><strong>2. Taste Passport:</strong> Years of consumption history and high Pour Scores build massive consumer switching cost.</p>
+              <p><strong>3. Structural Gap:</strong> Listing aggregators are engineered for discovery, not dynamic SKU wallet decerement ledgers.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: Go-To-Market -->
+      <section class="slide" data-slide-index="10">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">GO-TO-MARKET</span>
+          <h1 class="slide-h1">The "Cold Start" is <span class="highlight">Already Solved.</span></h1>
+          <p class="slide-desc">We leverage existing offline distribution channels to acquire highly targeted users at zero cost.</p>
+        </div>
+        <div class="flow-container">
+          <div class="flow-step">
+            <div class="flow-number">1</div>
+            <div class="flow-title">Club-First Launch</div>
+            <p class="card-text" style="font-size: 0.78rem;">Deploy 3-5 premium pilots in Bangalore utilizing founders' 8-year partner network. Target existing regular tables.</p>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <div class="flow-number">2</div>
+            <div class="flow-title">In-Venue Onboard</div>
+            <p class="card-text" style="font-size: 0.78rem;">Clubs act as our free acquisition channel. Bartenders, host staff, table tents, and menu QR prompts onboard users at table.</p>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <div class="flow-number">3</div>
+            <div class="flow-title">Viral Ignition</div>
+            <p class="card-text" style="font-size: 0.78rem;">Table-moment QR sharing and "Buy Your Friend a Drink" loops trigger high-speed word-of-mouth user acquisition.</p>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <div class="flow-number">4</div>
+            <div class="flow-title">Brand Scale</div>
+            <p class="card-text" style="font-size: 0.78rem;">Leverage aggregate taste DNA data to secure high-value partnerships with spirits distributors and scale to Mumbai/Delhi NCR.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 12: Traction & Milestones -->
+      <section class="slide" data-slide-index="11">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">ROADMAP & TRACTION</span>
+          <h1 class="slide-h1">12 Months. <span class="highlight">Two Cities. ₹50L GMV/mo.</span></h1>
+          <p class="slide-desc">Our clear growth milestones are mapped to establish network dominance rapidly.</p>
+        </div>
+        <div class="slide-grid col-4" style="margin-bottom: 1.5rem;">
+          <div class="card accent-gold">
+            <h4 class="card-title">Q1: Launch MVP</h4>
+            <p class="card-text">Deploy Core Wallet iOS/Android app and club dashboard. Secure first 3 Bangalore pilots. Track initial 200 bottle reservations.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4 class="card-title">Q2: Community</h4>
+            <p class="card-text">Ignite social features (Tribes & Night Boards). Expand to 10 key premium partner clubs. Solidify unit economics.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4 class="card-title">Q3: City Expansion</h4>
+            <p class="card-text">Launch in second major city (Mumbai). Scale network to 20 clubs. Initiate sponsored Drop test with premium brands.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4 class="card-title">Q4: Scale Phase</h4>
+            <p class="card-text">Exceed ₹50L monthly GMV run-rate. Grow to 5,000+ active transacting members. Prepare metrics for Seed institutional round.</p>
+          </div>
+        </div>
+        <div style="font-family: 'Outfit'; font-size: 1rem; color: var(--accent-green); font-weight: 700;">
+          ✅ DONE: Business model stressed • Team assembled • Initial Bangalore club relationships secured
+        </div>
+      </section>
+
+      <!-- SLIDE 13: Team -->
+      <section class="slide" data-slide-index="12">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">FOUNDING TEAM</span>
+          <h1 class="slide-h1">The Perfect <span class="highlight">Founder-Market Fit.</span></h1>
+          <p class="slide-desc">We combine direct distribution relationships, deep local operational insights, and technical execution capability.</p>
+        </div>
+        <div class="slide-grid col-2">
+          <div class="card accent-gold">
+            <h4 class="card-title">👤 Sudarshan Garg (Product & Biz)</h4>
+            <p class="card-text" style="margin-bottom: 0.5rem;"><strong>12 Years Software Dev • 8 Years Nightlife Events.</strong></p>
+            <p class="card-text">Founded and operated premium scale events across Bangalore (Holi, Dandiya, and massive NYE club collabs). Built direct personal phonebook relationships with major venue owners and GMs. Resolves the launching cold-start challenge on Day 1.</p>
+          </div>
+          <div class="card accent-purple">
+            <h4 class="card-title">👤 Hargobind (Technology & Ops)</h4>
+            <p class="card-text" style="margin-bottom: 0.5rem;"><strong>Expert Tech Founder • Web3 & AI Architecture.</strong></p>
+            <p class="card-text">Experienced startup builder shipping robust consumer-facing web and mobile applications for global enterprise clients. Engineered low-latency secure digital payment, ledger, and transactional logic systems.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 14: Regulatory Positioning -->
+      <section class="slide" data-slide-index="13">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">COMPLIANCE & RISK</span>
+          <h1 class="slide-h1">Clean, Scalable, <span class="highlight">Low-Risk Legal Tech.</span></h1>
+          <p class="slide-desc">Mehfil is explicitly positioned as a technology ledger and transaction coordinator, bypassing high excise liabilities.</p>
+        </div>
+        <div class="slide-grid col-2">
+          <div class="card accent-green">
+            <h4 class="card-title">📜 Legally Shielded Positioning</h4>
+            <p class="card-text">Mehfil <strong>does not own, warehouse, or retail alcohol</strong>. All stock is purchased, owned, and served strictly by licensed, compliant partner venues. The app acts solely as a digital ledger to coordinate entitlements. Platform fee categorized as IT services (SAC 998314), subject to standard 18% GST.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4 class="card-title">🔒 Multi-Tier Verification Safeguards</h4>
+            <p class="card-text">Strict digital onboarding requires DOB confirmation + Aadhaar/PAN validation via DigiLocker API integration. Venues retain absolute local liability to execute standard ID entry checks. The transaction flow matches existing aggregator models.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 15: The Ask -->
+      <section class="slide" data-slide-index="14">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">FUNDING ROUND</span>
+          <h1 class="slide-h1">₹1.5 Crore Pre-Seed to <span class="highlight">Prove the Model.</span></h1>
+          <p class="slide-desc">Funding will directly unlock the live product, pilot validation, and geographic scale targets.</p>
+        </div>
+        
+        <div style="display: flex; width: 100%; gap: 2rem; align-items: center;">
+          <div style="flex: 1.2; display: flex; flex-direction: column; gap: 0.75rem; text-align: left;">
+            <h4 style="font-family: 'Outfit'; color: var(--gold-light); font-size: 1.15rem; margin-bottom: 0.25rem;">Allocation Breakdown</h4>
+            <div class="fund-row">
+              <span class="fund-pct">40%</span>
+              <div class="fund-bar-outer"><div class="fund-bar-inner" style="width: 40%; background: var(--gold-gradient);"></div></div>
+              <span class="card-text" style="font-weight: 500; min-width: 140px;">Product & Eng (₹60L)</span>
+            </div>
+            <div class="fund-row">
+              <span class="fund-pct" style="color: var(--accent-purple-light);">25%</span>
+              <div class="fund-bar-outer"><div class="fund-bar-inner" style="width: 25%; background: var(--accent-purple-gradient);"></div></div>
+              <span class="card-text" style="font-weight: 500; min-width: 140px;">Sales & Onboard (₹37.5L)</span>
+            </div>
+            <div class="fund-row">
+              <span class="fund-pct" style="color: var(--accent-blue);">15%</span>
+              <div class="fund-bar-outer"><div class="fund-bar-inner" style="width: 15%; background: var(--accent-blue);"></div></div>
+              <span class="card-text" style="font-weight: 500; min-width: 140px;">Marketing (₹22.5L)</span>
+            </div>
+            <div class="fund-row">
+              <span class="fund-pct" style="color: var(--accent-green);">10%</span>
+              <div class="fund-bar-outer"><div class="fund-bar-inner" style="width: 10%; background: var(--accent-green);"></div></div>
+              <span class="card-text" style="font-weight: 500; min-width: 140px;">Legal & Ops (₹15L)</span>
+            </div>
+          </div>
+          
+          <div class="card accent-gold" style="flex: 0.8; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+            <h4 class="card-title">🔓 What This Round Unlocks</h4>
+            <p class="card-text" style="margin-bottom: 0.5rem;">• High-fidelity live product (iOS + Android + Dashboard)</p>
+            <p class="card-text" style="margin-bottom: 0.5rem;">• 20 partner clubs onboarded across 2 cities</p>
+            <p class="card-text" style="margin-bottom: 0.5rem;">• 5,000+ transacting active community members</p>
+            <p class="card-text">• ₹50L+ Monthly GMV run-rate with LTV:CAC > 4:1 proven</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 16: Closing -->
+      <section class="slide" data-slide-index="15">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">JOIN MEHFIL</span>
+          <h1 class="slide-h1">Your Night. Your People. <span class="highlight">Your Bottle.</span></h1>
+          <p class="slide-desc" style="font-size: 1.2rem;">Let's build the status, identity, and commerce platform for India's massive nightlife expansion.</p>
+        </div>
+        <div class="quote-block" style="text-align: center; max-width: 700px; margin-top: 1.5rem; margin-bottom: 2rem;">
+          "We are not selling pegs. We are digitizing the social connection, trust, and premium currency of India's physical weekend gatherings."
+        </div>
+        <div style="font-family: 'Outfit'; font-size: 1.2rem; color: var(--gold-light); display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+          <span>📧 investor@mehfil.ing</span>
+          <span>🌐 mehfil.ing/invest</span>
+          <span>📱 +91 98765 43210</span>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Navigation Control Footer -->
+    <footer>
+      <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" aria-label="Previous Slide">
+          <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        
+        <div class="slide-indicators" id="indicators">
+          <!-- Populated by JS -->
+        </div>
+
+        <button class="nav-btn" id="nextBtn" aria-label="Next Slide">
+          <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
+      </div>
+
+      <div style="display: flex; align-items: center;">
+        <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); font-family: 'Outfit';" id="slideCounter">SLIDE 1 / 16</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Sliding Index Menu -->
+  <div class="backdrop-overlay" id="menuBackdrop"></div>
+  <div class="slide-menu" id="slideMenu">
+    <div class="menu-header">
+      <h3 class="menu-title">Investor Deck Index</h3>
+      <button class="menu-close" id="menuCloseBtn">&times;</button>
+    </div>
+    <div class="menu-items" id="menuItems">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+
+  <script>
+    // State management
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    
+    // UI Elements
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const slideCounter = document.getElementById('slideCounter');
+    const progressBar = document.getElementById('progressBar');
+    const indicatorsContainer = document.getElementById('indicators');
+    const menuBtn = document.getElementById('menuBtn');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+    const slideMenu = document.getElementById('slideMenu');
+    const menuBackdrop = document.getElementById('menuBackdrop');
+    const menuItemsContainer = document.getElementById('menuItems');
+
+    // Slide Titles for Index Menu
+    const slideTitles = [
+      "The Opening Line",
+      "Why Mehfil?",
+      "The Double-Sided Pain",
+      "The Core Insight",
+      "Product Stack Layer",
+      "The Table Viral Loop",
+      "Market Landscape",
+      "Monetization Model",
+      "Unit Economics",
+      "Competitive Matrix",
+      "Go-To-Market Flow",
+      "Traction & Milestones",
+      "The Founding Team",
+      "Regulatory Position",
+      "Pre-Seed Ask Detail",
+      "Closing Invitation"
+    ];
+
+    // Initialize Indicators & Menu Items
+    function initPresentation() {
+      indicatorsContainer.innerHTML = '';
+      menuItemsContainer.innerHTML = '';
+      
+      for(let i=0; i < totalSlides; i++) {
+        // Dot
+        const indicator = document.createElement('div');
+        indicator.className = `indicator ${i === 0 ? 'active' : ''}`;
+        indicator.setAttribute('data-target-index', i);
+        indicator.addEventListener('click', () => jumpToSlide(i));
+        indicatorsContainer.appendChild(indicator);
+
+        // Sidebar Menu Link
+        const menuItem = document.createElement('button');
+        menuItem.className = `menu-item ${i === 0 ? 'active' : ''}`;
+        menuItem.innerHTML = `<span style="color: var(--gold); font-weight: 700; margin-right: 0.5rem;">${(i + 1).toString().padStart(2, '0')}</span> ${slideTitles[i]}`;
+        menuItem.addEventListener('click', () => {
+          jumpToSlide(i);
+          toggleMenu(false);
+        });
+        menuItemsContainer.appendChild(menuItem);
+      }
+
+      updateUI();
+    }
+
+    // Update active visual elements
+    function updateUI() {
+      slides.forEach((slide, index) => {
+        if(index === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      const indicators = document.querySelectorAll('.indicator');
+      indicators.forEach((dot, index) => {
+        if(index === currentSlide) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+
+      const menuItems = document.querySelectorAll('.menu-item');
+      menuItems.forEach((item, index) => {
+        if(index === currentSlide) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+
+      slideCounter.innerText = `SLIDE ${(currentSlide + 1).toString()} / ${totalSlides}`;
+      const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+
+      prevBtn.style.opacity = currentSlide === 0 ? '0.3' : '1';
+      prevBtn.style.pointerEvents = currentSlide === 0 ? 'none' : 'auto';
+      
+      nextBtn.style.opacity = currentSlide === totalSlides - 1 ? '0.3' : '1';
+      nextBtn.style.pointerEvents = currentSlide === totalSlides - 1 ? 'none' : 'auto';
+    }
+
+    function nextSlide() {
+      if(currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateUI();
+      }
+    }
+
+    function prevSlide() {
+      if(currentSlide > 0) {
+        currentSlide--;
+        updateUI();
+      }
+    }
+
+    function jumpToSlide(index) {
+      if(index >= 0 && index < totalSlides) {
+        currentSlide = index;
+        updateUI();
+      }
+    }
+
+    // Interactive Tab switcher logic (Slide 8)
+    window.switchTab = function(event, tabId) {
+      const parentSlide = event.target.closest('.slide');
+      
+      const triggers = parentSlide.querySelectorAll('.tab-trigger');
+      triggers.forEach(trigger => trigger.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const contents = parentSlide.querySelectorAll('.tab-content');
+      contents.forEach(content => content.classList.remove('active'));
+      parentSlide.querySelector(`#${tabId}`).classList.add('active');
+    }
+
+    // Toggle Index Menu sidebar
+    function toggleMenu(show) {
+      if(show) {
+        slideMenu.classList.add('open');
+        menuBackdrop.classList.add('show');
+      } else {
+        slideMenu.classList.remove('open');
+        menuBackdrop.classList.remove('show');
+      }
+    }
+
+    // Event Listeners binding
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+    
+    menuBtn.addEventListener('click', () => toggleMenu(true));
+    menuCloseBtn.addEventListener('click', () => toggleMenu(false));
+    menuBackdrop.addEventListener('click', () => toggleMenu(false));
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowRight' || e.key === 'Space') {
+        nextSlide();
+      } else if(e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if(e.key === 'Escape') {
+        toggleMenu(false);
+      }
+    });
+
+    // Touch Swipe Navigation for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      if (touchStartX - touchEndX > swipeThreshold) {
+        nextSlide(); 
+      }
+      if (touchEndX - touchStartX > swipeThreshold) {
+        prevSlide(); 
+      }
+    }
+    
+    // Bootstrap
+    document.querySelector('header').style.position = 'relative';
+    document.querySelector('header').style.zIndex = '1000';
+    document.querySelector('footer').style.position = 'relative';
+    document.querySelector('footer').style.zIndex = '1000';
+    initPresentation();
+  </script>
+</body>
+</html>
