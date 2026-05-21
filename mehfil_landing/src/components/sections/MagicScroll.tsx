@@ -17,105 +17,111 @@ export default function MagicScroll() {
   const [scanActive, setScanActive] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
 
+  // Refactored scrolling with GSAP ScrollTrigger pinning
   useEffect(() => {
     let mm = gsap.matchMedia();
-
-    mm.add("(min-width: 1024px)", () => {
+    // Create GSAP context for proper cleanup
+    let ctx = gsap.context(() => {
+      // Pin the whole section and scrub the timeline based on scroll progress
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: triggerRef.current,
           start: "top top",
-          end: "bottom bottom",
+          // Pin the container; GSAP will add spacing automatically
+          pin: true,
+          // End after enough scroll to cover all 3 steps (~300% of viewport)
+          end: "+=300%",
           scrub: 1.2,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
-            // Map scroll progress to active step indicator
             const step = Math.min(2, Math.floor(self.progress * 3));
             setActiveStep(step);
           },
         },
       });
 
+      // Set initial states
       gsap.set(laserRef.current, { y: -20, opacity: 0 });
 
-      tl.to(bottleCardRef.current, {
-        scale: 0.58,
-        y: "18vh",
-        x: "-3vw",
-        rotateY: 15,
-        rotateX: -8,
-        boxShadow: "0 30px 60px -12px rgba(0,0,0,0.95)",
-        borderColor: "rgba(245,196,83,0.5)",
-        duration: 3,
-        ease: "power2.inOut",
-      });
+      // Desktop animation sequence
+      const desktopAnim = () => {
+        tl.to(bottleCardRef.current, {
+          scale: 0.58,
+          y: "18vh",
+          x: "-3vw",
+          rotateY: 15,
+          rotateX: -8,
+          boxShadow: "0 30px 60px -12px rgba(0,0,0,0.95)",
+          borderColor: "rgba(245,196,83,0.5)",
+          duration: 3,
+          ease: "power2.inOut",
+        })
+          .to(phoneRef.current, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 2.5,
+            ease: "power2.out",
+          }, "-=2")
+          .to(laserRef.current, {
+            opacity: 1,
+            y: 280,
+            duration: 3,
+            ease: "power2.inOut",
+            onStart: () => setScanActive(true),
+            onComplete: () => {
+              setScanActive(false);
+              setServings(4);
+            },
+            onReverseComplete: () => {
+              setScanActive(false);
+              setServings(5);
+            },
+          })
+          .to(laserRef.current, { opacity: 0, duration: 0.5 });
+      };
 
-      tl.to(phoneRef.current, {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 2.5,
-        ease: "power2.out",
-      }, "-=2");
+      // Mobile animation sequence (same as original but scoped under same timeline)
+      const mobileAnim = () => {
+        tl.to(bottleCardRef.current, {
+          scale: 0.48,
+          y: "10vh",
+          x: "0vw",
+          rotateY: 0,
+          rotateX: 0,
+          boxShadow: "0 20px 40px -8px rgba(0,0,0,0.9)",
+          borderColor: "rgba(245,196,83,0.3)",
+          duration: 2.5,
+        })
+          .to(phoneRef.current, {
+            opacity: 1,
+            y: 0,
+            scale: 0.82,
+            duration: 2,
+          }, "-=1.5")
+          .to(laserRef.current, {
+            opacity: 1,
+            y: 240,
+            duration: 3,
+            ease: "power2.inOut",
+            onStart: () => setScanActive(true),
+            onComplete: () => {
+              setScanActive(false);
+              setServings(4);
+            },
+            onReverseComplete: () => {
+              setScanActive(false);
+              setServings(5);
+            },
+          })
+          .to(laserRef.current, { opacity: 0, duration: 0.5 });
+      };
 
-      tl.to(laserRef.current, {
-        opacity: 1,
-        y: 280,
-        duration: 3,
-        ease: "power2.inOut",
-        onStart: () => setScanActive(true),
-        onComplete: () => { setScanActive(false); setServings(4); },
-        onReverseComplete: () => { setScanActive(false); setServings(5); },
-      });
-
-      tl.to(laserRef.current, { opacity: 0, duration: 0.5 });
-    });
-
-    mm.add("(max-width: 1023px)", () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: triggerRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 1.2,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      gsap.set(laserRef.current, { y: -20, opacity: 0 });
-
-      tl.to(bottleCardRef.current, {
-        scale: 0.48,
-        y: "10vh",
-        x: "0vw",
-        rotateY: 0,
-        rotateX: 0,
-        boxShadow: "0 20px 40px -8px rgba(0,0,0,0.9)",
-        borderColor: "rgba(245,196,83,0.3)",
-        duration: 2.5,
-      });
-
-      tl.to(phoneRef.current, {
-        opacity: 1,
-        y: 0,
-        scale: 0.82,
-        duration: 2,
-      }, "-=1.5");
-
-      tl.to(laserRef.current, {
-        opacity: 1,
-        y: 240,
-        duration: 3,
-        ease: "power2.inOut",
-        onStart: () => setScanActive(true),
-        onComplete: () => { setScanActive(false); setServings(4); },
-        onReverseComplete: () => { setScanActive(false); setServings(5); },
-      });
-
-      tl.to(laserRef.current, { opacity: 0, duration: 0.5 });
-    });
-
-    return () => mm.revert();
+      // Apply appropriate animation based on viewport width
+      mm.add("(min-width: 1024px)", desktopAnim);
+      mm.add("(max-width: 1023px)", mobileAnim);
+    }, triggerRef);
+    return () => ctx.revert();
   }, []);
 
   const steps = [
@@ -145,7 +151,7 @@ export default function MagicScroll() {
   return (
     <div ref={containerRef} id="how-it-works" className="relative bg-brand-black w-full">
       {/* 250vh: enough room for 3 clear scroll stages without feeling endless */}
-      <div ref={triggerRef} className="relative w-full h-[250vh]">
+      <div ref={triggerRef} className="relative w-full">
 
         <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center">
 

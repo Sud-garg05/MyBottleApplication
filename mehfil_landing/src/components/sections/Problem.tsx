@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Clock, HelpCircle, Receipt } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 interface StoryStep {
   title: string;
@@ -54,28 +57,24 @@ export default function Problem() {
   };
 
   useEffect(() => {
-    const el = triggerRef.current;
-    if (!el) return;
-
-    const onScroll = () => {
-      // If user manually clicked, don't override
-      if (manualOverride.current) return;
-
-      const rect = el.getBoundingClientRect();
-      const totalScrollable = rect.height - window.innerHeight;
-      if (totalScrollable <= 0) return;
-
-      const scrolled = -rect.top;
-      if (scrolled < 0 || scrolled > totalScrollable) return;
-
-      const progress = scrolled / totalScrollable;
-      // Map 0→1 progress to 4 steps: 0-0.25, 0.25-0.5, 0.5-0.75, 0.75-1.0
-      const step = Math.min(3, Math.floor(progress * 4));
-      setActiveStep(step);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    let ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: triggerRef.current,
+        start: "top top",
+        // Pin the section for its full height; GSAP will add spacing automatically
+        pin: true,
+        // End after enough scroll to cover all 4 steps (≈400% of viewport)
+        end: "+=400%",
+        scrub: 0.5,
+        onUpdate: (self) => {
+          if (manualOverride.current) return;
+          const progress = self.progress; // 0‑1
+          const step = Math.min(3, Math.floor(progress * 4));
+          setActiveStep(step);
+        },
+      });
+    }, triggerRef);
+    return () => ctx.revert();
   }, []);
 
   const bottleVisuals = [
@@ -140,7 +139,7 @@ export default function Problem() {
 
   return (
     // triggerRef wraps the entire scroll-pinned section — must be tall enough for 4 stages
-    <div ref={triggerRef} id="problem-friction" className="relative h-[400vh]">
+    <div ref={triggerRef} id="problem-friction" className="relative">
       <div className="sticky top-0 h-screen overflow-hidden bg-[#080809]">
 
         {/* Ambient glow */}
