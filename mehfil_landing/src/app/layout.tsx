@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description: "Mehfil is the social, identity, and retention layer of India's nightlife. Reserve premium bottles, build your Taste DNA, and belong to the culture.",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.svg",
   },
 };
 

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden bg-brand-black">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden bg-brand-black">
       {/* Ambient backdrop */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-radial-[circle_at_center,_var(--tw-gradient-stops)] from-brand-teal/5 via-brand-black/90 to-brand-black z-10" />
@@ -87,12 +87,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-          className="font-display font-extrabold text-4xl sm:text-5xl md:text-7xl leading-[1.08] tracking-tight text-white mb-5 text-balance"
+          className="font-display font-extrabold text-4xl sm:text-5xl md:text-7xl leading-[1.22] tracking-tight text-white mb-5 text-balance pb-1"
         >
-          The Social, Identity{" "}
-          <span className="text-brand-teal">&amp; Retention Layer</span>
-          <br className="hidden md:inline" />
-          {" "}for India&apos;s Nightlife
+          Your Night. Your People. <span className="text-brand-teal">Your Bottle.</span>
         </motion.h1>
 
         <motion.p

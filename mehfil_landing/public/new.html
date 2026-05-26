@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mehfil — Your Night. Your People. Your Bottle.</title>
+  <meta name="description" content="India's elite nightlife layer. Reserve premium bottles digitally, build a permanent Nightlife Passport, and unlock the private tribes shaping Bangalore’s culture.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =========================================================================
+       1. MODERN DESIGN SYSTEM & OKLCH VARIABLES
+       ========================================================================= */
+    :root {
+      /* OKLCH Color Palette */
+      --bg-midnight: oklch(8% 0.008 240);       /* Midnight indigo-tinted black */
+      --surface-dark: oklch(13% 0.012 240);    /* Deep card/section surface */
+      --surface-light: oklch(18% 0.015 240);   /* Highlight surface */
+      
+      --accent-teal: oklch(72% 0.14 195);      /* Electric glow teal */
+      --accent-teal-subtle: oklch(72% 0.14 195 / 0.1);
+      
+      --accent-gold: oklch(76% 0.12 85);       /* Premium champagne gold */
+      --accent-gold-subtle: oklch(76% 0.12 85 / 0.1);
+      
+      --text-main: oklch(96% 0.005 240);       /* Off-white readable text */
+      --text-muted: oklch(80% 0.01 240);       /* Soft slate grey */
+      --text-dark: oklch(50% 0.01 240);        /* Deep support label slate */
+      
+      --border-thin: oklch(100% 0 0 / 0.06);   /* Ultra-thin border */
+      --border-glow: oklch(72% 0.14 195 / 0.25);
+      
+      /* Typography */
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      
+      /* Animation Curves */
+      --ease-exponential: cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-fast: 0.2s var(--ease-exponential);
+      --transition-medium: 0.5s var(--ease-exponential);
+      --transition-slow: 0.8s var(--ease-exponential);
+    }
+
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--bg-midnight);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Global Layout Utilities */
+    .container {
+      max-width: 78rem;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 8rem 0;
+      position: relative;
+    }
+
+    /* Typographic Hierarchy (No gradients, high contrast weight) */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+    }
+
+    p {
+      max-width: 65ch; /* Cap body line length to 65ch */
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Ambient Background Halos */
+    .ambient-halo {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+      mix-blend-mode: screen;
+    }
+
+    .halo-teal {
+      background: var(--accent-teal);
+      width: 35rem;
+      height: 35rem;
+      top: -10rem;
+      left: -10rem;
+      animation: float-slow 20s infinite ease-in-out;
+    }
+
+    .halo-gold {
+      background: var(--accent-gold);
+      width: 30rem;
+      height: 30rem;
+      bottom: -15rem;
+      right: -10rem;
+      opacity: 0.3;
+      animation: float-slow-reverse 25s infinite ease-in-out;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(3rem, 2rem) scale(1.1); }
+    }
+
+    @keyframes float-slow-reverse {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-2rem, -3rem) scale(0.95); }
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem 2.2rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s var(--ease-exponential);
+      cursor: pointer;
+      border: 1px solid transparent;
+      gap: 0.5rem;
+    }
+
+    .btn-teal {
+      background-color: var(--accent-teal);
+      color: var(--bg-midnight);
+    }
+
+    .btn-teal:hover {
+      background-color: var(--text-main);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px oklch(72% 0.14 195 / 0.2);
+    }
+
+    .btn-secondary {
+      background-color: var(--surface-dark);
+      color: var(--text-main);
+      border-color: var(--border-thin);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-2px);
+    }
+
+    /* Eyebrow Label */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      font-weight: 800;
+      color: var(--accent-teal);
+      margin-bottom: 1.5rem;
+    }
+
+    .eyebrow-gold {
+      color: var(--accent-gold);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 1.5rem;
+      color: var(--text-main);
+    }
+
+    .section-desc {
+      font-size: 1.1rem;
+      margin-bottom: 3.5rem;
+      color: var(--text-muted);
+    }
+
+    /* =========================================================================
+       2. NAVIGATION HEADER
+       ========================================================================= */
+    header.navigation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-thin);
+      background-color: oklch(8% 0.008 240 / 0.75);
+      transition: background var(--transition-fast);
+    }
+
+    header.navigation .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 4.5rem;
+    }
+
+    header.navigation .logo {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.35rem;
+      letter-spacing: -0.04em;
+    }
+
+    header.navigation .logo span {
+      color: var(--accent-teal);
+    }
+
+    header.navigation nav {
+      display: none;
+      gap: 2.2rem;
+    }
+
+    header.navigation nav a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color var(--transition-fast);
+    }
+
+    header.navigation nav a:hover {
+      color: var(--text-main);
+    }
+
+    @media (min-width: 48rem) {
+      header.navigation nav {
+        display: flex;
+      }
+    }
+
+    /* =========================================================================
+       3. HERO SECTION (SCENE 1)
+       ========================================================================= */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 8rem;
+      padding-bottom: 4rem;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      max-width: 52rem;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: oklch(72% 0.14 195 / 0.05);
+      border: 1px solid oklch(72% 0.14 195 / 0.15);
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-teal);
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      color: var(--text-main);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--text-muted);
+      margin: 0 auto 3rem;
+      line-height: 1.5;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      justify-content: center;
+      width: 100%;
+      max-width: 25rem;
+      margin: 0 auto 4rem;
+    }
+
+    @media (min-width: 30rem) {
+      .hero-ctas {
+        flex-direction: row;
+        max-width: none;
+      }
+    }
+
+    .hero-trust {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .hero-trust span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hero-trust span::before {
+      content: "✦";
+      color: var(--accent-gold);
+    }
+
+    /* =========================================================================
+       4. PROBLEM SECTION (SCENE 2) - ASYMMETRICAL STEPPER
+       ========================================================================= */
+    .problem-grid {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (min-width: 64rem) {
+      .problem-grid {
+        grid-template-cols: 1.1fr 0.9fr;
+      }
+    }
+
+    .problem-stepper {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .step-card {
+      background-color: var(--surface-dark);
+      border: 1px solid var(--border-thin);
+      padding: 1.5rem 2rem;
+      border-radius: 1.25rem;
+      transition: all 0.3s var(--ease-exponential);
+      cursor: pointer;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .step-card.active {
+      background-color: var(--surface-light);
+      border-color: oklch(9% 0.1 20 / 0.2); /* Soft highlight tint */
+      box-shadow: 0 10px 30px oklch(0% 0 0 / 0.15);
+    }
+
+    .step-number {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--text-dark);
+      transition: color var(--transition-fast);
+    }
+
+    .step-card.active .step-number {
+      color: var(--accent-teal);
+    }
+
+    .step-content h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .step-content p {
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    /* Asymmetrical Visual Column */
+    .problem-visual {
+      background: linear-gradient(135deg, var(--surface-dark), oklch(10% 0.01 240));
+      border: 1px solid var(--border-thin);
+      border-radius: 2rem;
+      height: 30rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-bottle-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .bottle-label-text {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: var(--accent-gold);
+      margin-top: 1rem;
+      background: oklch(76% 0.12 85 / 0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 99px;
+      border: 1px solid oklch(76% 0.12 85 / 0.2);
+    }
+
+    /* =========================================================================
+       5. SOLUTION SECTIONS (SCENE 3 & 4) - TRIPLE-LAYER & CLIMAX
+       ========================================================================= */
+    .architecture-grid {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 48rem) {
+      .architecture-grid {
+        grid-template-cols: repeat(3, 1fr);
+      }
+    }
+
+    .layer-card {
+      background-color: var(--surface-dark);
+      border: 1px solid var(--border-thin);
+      border-radius: 1.5rem;
+      padding: 3rem 2rem;
+      transition: all 0.3s var(--ease-exponential);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .layer-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-teal);
+    }
+
+    .layer-tag {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--accent-gold);
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    .layer-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+    }
+
+    .layer-card p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Scene 4: Climax Storyboard */
+    .climax-wrapper {
+      background-color: var(--surface-dark);
+      border: 1px solid var(--border-thin);
+      border-radius: 2rem;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 48rem) {
+      .climax-wrapper {
+        padding: 5rem;
+      }
+    }
+
+    .climax-content {
+      max-width: 36rem;
+      margin-bottom: 4rem;
+    }
+
+    .storyboard-timeline {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 48rem) {
+      .storyboard-timeline {
+        grid-template-cols: repeat(5, 1fr);
+      }
+    }
+
+    .storyboard-node {
+      background-color: var(--bg-midnight);
+      border: 1px solid var(--border-thin);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color var(--transition-fast);
+    }
+
+    .storyboard-node:hover {
+      border-color: var(--accent-gold);
+    }
+
+    .storyboard-index {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--accent-gold);
+    }
+
+    .storyboard-text {
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: var(--text-muted);
+    }
+
+    /* =========================================================================
+       6. HOW IT WORKS & FEATURES (SCENE 5 & 6)
+       ========================================================================= */
+    .steps-grid {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 3rem;
+    }
+
+    @media (min-width: 48rem) {
+      .steps-grid {
+        grid-template-cols: repeat(3, 1fr);
+      }
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--surface-light);
+      transition: color var(--transition-fast);
+    }
+
+    .step-item:hover .step-num {
+      color: var(--accent-teal);
+    }
+
+    .step-title {
+      font-size: 1.35rem;
+      color: var(--text-main);
+    }
+
+    /* Scene 6: Specs Dashboard (Stripe Style Specs) */
+    .specs-table-wrapper {
+      background-color: var(--surface-dark);
+      border: 1px solid var(--border-thin);
+      border-radius: 1.5rem;
+      overflow: hidden;
+    }
+
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .specs-table th, .specs-table td {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-thin);
+    }
+
+    .specs-table th {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-dark);
+      font-weight: 800;
+      background-color: oklch(11% 0.01 240);
+    }
+
+    .specs-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .feature-name {
+      font-weight: 600;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .feature-indicator {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background-color: var(--accent-teal);
+      display: inline-block;
+      box-shadow: 0 0 8px var(--accent-teal);
+    }
+
+    .feature-indicator.gold {
+      background-color: var(--accent-gold);
+      box-shadow: 0 0 8px var(--accent-gold);
+    }
+
+    .feature-details {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+    }
+
+    .feature-outcome {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent-teal);
+    }
+
+    /* =========================================================================
+       7. ECONOMICS COMPARISON (SCENE 7) - LIVE CALCULATOR
+       ========================================================================= */
+    .economics-grid {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (min-width: 64rem) {
+      .economics-grid {
+        grid-template-cols: 0.95fr 1.05fr;
+      }
+    }
+
+    .calc-box {
+      background-color: var(--surface-dark);
+      border: 1px solid var(--border-thin);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
+
+    .calc-slider-group {
+      margin-bottom: 2.5rem;
+    }
+
+    .calc-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .calc-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .calc-val {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--accent-gold);
+    }
+
+    /* Custom range input slider */
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+    }
+
+    input[type=range]:focus {
+      outline: none;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 4px;
+      cursor: pointer;
+      background: var(--surface-light);
+      border-radius: 2px;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: var(--accent-teal);
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -7px;
+      box-shadow: 0 0 10px oklch(72% 0.14 195 / 0.5);
+      transition: background-color var(--transition-fast);
+    }
+
+    input[type=range]::-webkit-slider-thumb:hover {
+      background: var(--text-main);
+    }
+
+    /* Custom high contrast output board */
+    .pricing-board {
+      display: grid;
+      grid-template-cols: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .board-metric {
+      background-color: var(--surface-dark);
+      border: 1px solid var(--border-thin);
+      border-radius: 1.25rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .board-metric.glow {
+      border-color: var(--accent-gold);
+      background: linear-gradient(180deg, var(--surface-dark), oklch(14% 0.01 85 / 0.03));
+    }
+
+    .board-num {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 2.25rem;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+      line-height: 1;
+    }
+
+    .board-metric.glow .board-num {
+      color: var(--accent-gold);
+    }
+
+    .board-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    /* =========================================================================
+       8. B2B VENUE PROTOCOL (SCENE 8)
+       ========================================================================= */
+    #venues {
+      background-color: oklch(6% 0.005 240); /* Distinct deep background */
+      border-top: 1px solid var(--border-thin);
+      border-bottom: 1px solid var(--border-thin);
+    }
+
+    .b2b-grid {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (min-width: 64rem) {
+      .b2b-grid {
+        grid-template-cols: 0.85fr 1.15fr;
+      }
+    }
+
+    .b2b-features {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 30rem) {
+      .b2b-features {
+        grid-template-cols: repeat(2, 1fr);
+      }
+    }
+
+    .b2b-card {
+      background-color: var(--surface-dark);
+      border: 1px solid var(--border-thin);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      transition: border-color var(--transition-fast);
+    }
+
+    .b2b-card:hover {
+      border-color: var(--accent-gold);
+    }
+
+    .b2b-icon-wrap {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 0.75rem;
+      background-color: var(--accent-gold-subtle);
+      border: 1px solid oklch(76% 0.12 85 / 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--accent-gold);
+    }
+
+    .b2b-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .b2b-card p {
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    /* =========================================================================
+       9. TRUST, ORIGINS & LEADS (SCENES 9, 10, 11)
+       ========================================================================= */
+    .trust-grid {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 48rem) {
+      .trust-grid {
+        grid-template-cols: repeat(3, 1fr);
+      }
+    }
+
+    .trust-card {
+      background-color: var(--surface-dark);
+      border: 1px solid var(--border-thin);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .trust-card h3 {
+      font-size: 1.15rem;
+      color: var(--text-main);
+    }
+
+    .trust-card p {
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    /* Origins (Scene 10) */
+    .origins-wrapper {
+      background-color: var(--surface-dark);
+      border: 1px solid var(--border-thin);
+      border-radius: 2rem;
+      padding: 4rem 2rem;
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 4rem;
+    }
+
+    @media (min-width: 64rem) {
+      .origins-wrapper {
+        padding: 5rem;
+        grid-template-cols: 1fr 1.1fr;
+      }
+    }
+
+    .origins-quote blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.4;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .origins-quote blockquote::before {
+      content: "“";
+      font-size: 4rem;
+      position: absolute;
+      top: -2.5rem;
+      left: -1rem;
+      color: var(--surface-light);
+      font-family: serif;
+      pointer-events: none;
+    }
+
+    .founders-grid {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 30rem) {
+      .founders-grid {
+        grid-template-cols: repeat(2, 1fr);
+      }
+    }
+
+    .founder-card {
+      background-color: var(--bg-midnight);
+      border: 1px solid var(--border-thin);
+      border-radius: 1.25rem;
+      padding: 2rem;
+    }
+
+    .founder-name {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+      color: var(--text-main);
+    }
+
+    .founder-role {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-gold);
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    .founder-desc {
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    /* Waitlist Ledger (Scene 11) */
+    .lead-box {
+      max-width: 32rem;
+      margin: 0 auto;
+      background-color: var(--surface-dark);
+      border: 1px solid var(--border-thin);
+      border-radius: 2rem;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px oklch(0% 0 0 / 0.3);
+    }
+
+    @media (min-width: 30rem) {
+      .lead-box {
+        padding: 4rem 3rem;
+      }
+    }
+
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-dark);
+      font-weight: 800;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-prefix {
+      position: absolute;
+      left: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent-gold);
+      font-weight: 600;
+      font-family: var(--font-display);
+    }
+
+    .lead-form input, .lead-form select {
+      width: 100%;
+      background-color: var(--bg-midnight);
+      border: 1px solid var(--border-thin);
+      border-radius: 0.85rem;
+      padding: 1rem 1.25rem;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      transition: all 0.3s var(--ease-exponential);
+      font-family: var(--font-body);
+    }
+
+    .lead-form input-prefix-active {
+      padding-left: 2.25rem;
+    }
+
+    .lead-form input:focus, .lead-form select:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 12px oklch(76% 0.12 85 / 0.15);
+    }
+
+    .lead-form select {
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .form-success-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+      padding: 2rem 0;
+    }
+
+    .success-icon-wrap {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      background-color: var(--accent-teal-subtle);
+      border: 1px solid oklch(72% 0.14 195 / 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-teal);
+    }
+
+    /* =========================================================================
+       10. ACCELERATED FAQ ACCORDION (SCENE 12)
+       ========================================================================= */
+    .faq-wrapper {
+      max-width: 45rem;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq-item {
+      background-color: var(--surface-dark);
+      border: 1px solid var(--border-thin);
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .faq-trigger {
+      width: 100%;
+      padding: 1.5rem 2rem;
+      background: none;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      cursor: pointer;
+      color: var(--text-main);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.05rem;
+      transition: color var(--transition-fast);
+    }
+
+    .faq-trigger:hover {
+      color: var(--accent-gold);
+    }
+
+    .faq-trigger svg {
+      transition: transform var(--transition-medium);
+      color: var(--text-dark);
+    }
+
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition-medium);
+    }
+
+    .faq-content-inner {
+      padding: 0 2rem 1.5rem 2rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .faq-item.open .faq-content {
+      max-height: 15rem;
+    }
+
+    .faq-item.open .faq-trigger svg {
+      transform: rotate(180deg);
+    }
+
+    /* =========================================================================
+       11. FOOTER
+       ========================================================================= */
+    footer.global-footer {
+      border-top: 1px solid var(--border-thin);
+      padding: 6rem 0 3rem 0;
+      background-color: oklch(6% 0.005 240);
+      color: var(--text-dark);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-cols: 1fr;
+      gap: 3.5rem;
+      margin-bottom: 5rem;
+    }
+
+    @media (min-width: 48rem) {
+      .footer-grid {
+        grid-template-cols: 1.5fr 1fr 1.5fr;
+      }
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-brand-logo {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.5rem;
+      color: var(--text-main);
+    }
+
+    .footer-brand-logo span {
+      color: var(--accent-teal);
+    }
+
+    .footer-title {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-main);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-links a {
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      transition: color var(--transition-fast);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-main);
+    }
+
+    .footer-regulatory p {
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: oklch(40% 0.005 240);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-thin);
+      padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    @media (min-width: 30rem) {
+      .footer-bottom {
+        flex-direction: row;
+      }
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-socials a:hover {
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Ambience -->
+  <div class="ambient-halo halo-teal"></div>
+  <div class="ambient-halo halo-gold"></div>
+
+  <!-- NAVIGATION HEADER -->
+  <header class="navigation">
+    <div class="container nav-wrapper">
+      <a href="#" class="logo" style="display: flex; align-items: center; gap: 0.6rem;">
+        <img src="logo.png" onerror="this.onerror=null; this.src='mehfil_logo_hd.svg';" alt="Mehfil Logo" style="width: 2.2rem; height: 2.2rem; object-fit: contain; filter: drop-shadow(0 2px 10px rgba(88,255,212,0.25));" />
+        <span>mehfil<span>.ing</span></span>
+      </a>
+      <nav>
+        <a href="#ecosystem">The Ecosystem</a>
+        <a href="#features">Ecosystem Specs</a>
+        <a href="#economics">Economic ROI</a>
+        <a href="#venues">Venue Protocol</a>
+      </nav>
+      <a href="#join" class="btn btn-teal" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">Claim Username</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION (SCENE 1) -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span style="display:inline-block; width:0.4rem; height:0.4rem; background:var(--accent-teal); border-radius:50%; margin-right:0.25rem;"></span>
+          mehfil.ing is live in Bangalore
+        </div>
+        <h1 class="hero-title">Your Night. Your People. Your Bottle.</h1>
+        <p class="hero-sub">
+          India’s elite nightlife layer lives here. Reserve curated premium bottles digitally, build a permanent Nightlife Passport, and belong to the private tribes shaping Bangalore’s culture.
+        </p>
+        <div class="hero-ctas">
+          <a href="#join" class="btn btn-teal">Claim Your @Username</a>
+          <a href="#venues" class="btn btn-secondary">Partner with Mehfil <span style="color: var(--accent-gold);">➔</span></a>
+        </div>
+        <div class="hero-trust">
+          <span>Digitizing premium spirits at Bangalore's top-tier venues</span>
+          <span>DigiLocker & Aadhaar identity verified</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM SECTION (SCENE 2) -->
+  <section id="problem" style="border-top: 1px solid var(--border-thin);">
+    <div class="container">
+      <div class="problem-grid">
+        <!-- Stepper Column -->
+        <div>
+          <div class="eyebrow"><span style="color:var(--accent-gold);">✦</span> The Current Traditional Friction</div>
+          <h2 class="section-title">A great weekend should build a legacy. Instead, it disappears by Monday.</h2>
+          <p class="section-desc" style="margin-bottom: 2.5rem;">
+            Premium bottles become wasted capital. No digital record, no ownership trail. Click through the traditional cycle of nightlife loss:
+          </p>
+          
+          <div class="problem-stepper">
+            <div class="step-card active" onclick="activateStep(0)">
+              <div class="step-number">01</div>
+              <div class="step-content">
+                <h3>The Luxury Tax</h3>
+                <p>You buy premium single malts at club peg rates—spending 20% to 30% more than the bottle's cost because finishing a whole bottle in a single night is rarely practical.</p>
+              </div>
+            </div>
+            <div class="step-card" onclick="activateStep(1)">
+              <div class="step-number">02</div>
+              <div class="step-content">
+                <h3>The Trust Handshake</h3>
+                <p>You leave your half-bottle behind the bar. It rests on a dusty physical shelf. No digital ledger. No receipt. You rely entirely on hope and paper slips.</p>
+              </div>
+            </div>
+            <div class="step-card" onclick="activateStep(2)">
+              <div class="step-number">03</div>
+              <div class="step-content">
+                <h3>The Ghost Asset</h3>
+                <p>Two weeks pass. You return to the venue. The paper slip is misplaced, the staff has rotated, or the bottle is unaccounted for. Your asset has vanished.</p>
+              </div>
+            </div>
+            <div class="step-card" onclick="activateStep(3)">
+              <div class="step-number">04</div>
+              <div class="step-content">
+                <h3>The Cycle Repeats</h3>
+                <p>You are forced to pay premium pricing again. A highly repetitive, high-friction transaction loop that keeps clubs and patrons disconnected.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Visual Column -->
+        <div class="problem-visual">
+          <div class="glass-bottle-container">
+            <!-- Sleek CSS Bottle Diagram -->
+            <svg viewBox="0 0 100 250" style="width: 8rem; height: 20rem; filter: drop-shadow(0 0 30px var(--accent-gold-subtle)); transition: filter 0.5s;">
+              <rect x="42" y="15" width="16" height="35" rx="3" fill="#15151c" stroke="var(--accent-gold)" stroke-width="1.5"/>
+              <path d="M25 50 Q20 75 20 115 L20 220 Q20 235 50 235 Q80 235 80 220 L80 115 Q80 75 75 50Z" fill="#15151c" stroke="var(--accent-gold)" stroke-width="1.5"/>
+              <!-- Liquid representation -->
+              <path id="bottle-liquid" d="M20 115 L20 220 Q20 232 50 232 Q80 232 80 220 L80 115Z" fill="oklch(82.26% 0.11 86.42)" opacity="0.85" style="transition: all 0.5s var(--ease-exponential);"/>
+              <text x="50" y="155" text-anchor="middle" font-size="5" fill="#fef08a" font-weight="bold" font-family="sans-serif" style="letter-spacing:1.5px;">MEHFIL</text>
+            </svg>
+            <div class="bottle-label-text" id="bottle-status-label">FULL · ₹12,000 VALUE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRIPLE-LAYER SOLUTION (SCENE 3) -->
+  <section id="ecosystem" style="background-color: var(--surface-dark); border-top: 1px solid var(--border-thin);">
+    <div class="container">
+      <div style="max-width: 48rem; margin: 0 auto 5rem; text-align: center;">
+        <div class="eyebrow eyebrow-gold">✦ The Mehfil Architecture</div>
+        <h2 class="section-title">One Reserved Bottle. Five Guaranteed Visits. A Permanent Legacy.</h2>
+      </div>
+      
+      <div class="architecture-grid">
+        <div class="layer-card">
+          <div class="layer-tag">Layer 01 — Asset</div>
+          <h3 class="layer-title">The Asset Wallet</h3>
+          <p>Reserve your brand-level bottle entitlement instantly. Your premium spirits live in a secure, digital wallet on your phone. No physical bottles to carry, no paper slips to lose. Pay once, redeem servings smoothly at the bar via a dynamic QR code in less than 10 seconds.</p>
+        </div>
+        <div class="layer-card">
+          <div class="layer-tag">Layer 02 — Identity</div>
+          <h3 class="layer-title">The Nightlife Passport</h3>
+          <p>Stop starting from scratch every weekend. Every visit, redemption, and premium selection is permanently stamped onto your digital Passport. Elevate your Pour Score to unlock curated allocations, members-only tasting rooms, and priority reservations at elite lounges.</p>
+        </div>
+        <div class="layer-card">
+          <div class="layer-tag">Layer 03 — Tribe</div>
+          <h3 class="layer-title">The Verified Community</h3>
+          <p>Real reviews from real attendees. Connect with the Taste DNA Tribes defining Bangalore's premium social circles (e.g., the Single Malt Elite, Espresso Martini Club). No anonymous reviews, no bots—only verified patrons who showed up and shared the pour.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIMAX / MONEY MOMENT (SCENE 4) -->
+  <section id="climax">
+    <div class="container">
+      <div class="climax-wrapper">
+        <!-- Background absolute elements -->
+        <div style="position: absolute; top:0; right:0; width: 25rem; height: 25rem; background: var(--accent-gold-subtle); filter: blur(100px); border-radius: 50%; opacity: 0.15; pointer-events: none;"></div>
+        
+        <div class="climax-content">
+          <div class="eyebrow">✦ The Social Climax</div>
+          <h2 class="section-title" style="font-size: clamp(1.8rem, 4vw, 2.75rem); margin-bottom: 1.5rem;">The quiet confidence of a verified pour.</h2>
+          <p>Every serving redeemed is a silent performance of status. Every status moment triggers a high-conversion viral loop. Here is how it lives at the table:</p>
+        </div>
+        
+        <div class="storyboard-timeline">
+          <div class="storyboard-node">
+            <div class="storyboard-index">01</div>
+            <div class="storyboard-text">You sit at a premium lounge with founders, colleagues, or friends.</div>
+          </div>
+          <div class="storyboard-node">
+            <div class="storyboard-index">02</div>
+            <div class="storyboard-text">You pull out your phone—a sleek, gold-accented dynamic QR code illuminates the screen.</div>
+          </div>
+          <div class="storyboard-node">
+            <div class="storyboard-index">03</div>
+            <div class="storyboard-text">The bartender scans it. The system responds instantly: "Mehfil Verified."</div>
+          </div>
+          <div class="storyboard-node">
+            <div class="storyboard-index">04</div>
+            <div class="storyboard-text">A premium, double-measure pour is served. No wallet is opened, no bill is requested.</div>
+          </div>
+          <div class="storyboard-node">
+            <div class="storyboard-index">05</div>
+            <div class="storyboard-text">The immediate table reaction: "Bro, what platform is that?"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS (SCENE 5) -->
+  <section id="how-it-works" style="background-color: var(--surface-dark); border-top: 1px solid var(--border-thin);">
+    <div class="container">
+      <div style="max-width: 48rem; margin: 0 auto 5rem; text-align: center;">
+        <div class="eyebrow">✦ System Architecture</div>
+        <h2 class="section-title">Reserve. Redeem. Repeat.</h2>
+      </div>
+      
+      <div class="steps-grid">
+        <div class="step-item">
+          <div class="step-num">01</div>
+          <h3 class="step-title">Secure the Entitlement</h3>
+          <p>Browse the app's premium registry, choose your curated brand (JW, Macallan, Grey Goose), and complete your purchase securely via UPI or Card. Your 5-serving asset is immediately locked for 90 days.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num">02</div>
+          <h3 class="step-title">Smooth Verification</h3>
+          <p>Present your dynamic QR code at the bar. The host scans, confirms, and pours. Your ledger updates in real-time with zero friction and zero payment processing delay.</p>
+        </div>
+        <div class="step-item">
+          <div class="step-num">03</div>
+          <h3 class="step-title">Permanent Legacy</h3>
+          <p>Return on your own terms. Your remaining balance remains perfectly preserved, your Taste DNA evolves, and your Pour Score ascends.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES SPECIFICATION (SCENE 6) -->
+  <section id="features">
+    <div class="container">
+      <div style="max-width: 48rem; margin: 0 auto 4rem;">
+        <div class="eyebrow">✦ The System Specification</div>
+        <h2 class="section-title">Engineered for premium experiences.</h2>
+      </div>
+      
+      <div class="specs-table-wrapper">
+        <table class="specs-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>The Technical Mechanic</th>
+              <th>The Outcome (Benefit)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="feature-name"><span class="feature-indicator"></span>Dynamic Spirit Wallet</td>
+              <td class="feature-details">Real-time, cryptographically-secure dynamic ledger mapping bottle entitlements.</td>
+              <td class="feature-outcome">Zero Wastage</td>
+            </tr>
+            <tr>
+              <td class="feature-name"><span class="feature-indicator gold"></span>Gold Status Interface</td>
+              <td class="feature-details">A sleek, full-screen visual layout displaying your unique @handle and brand asset.</td>
+              <td class="feature-outcome">Immediate Status</td>
+            </tr>
+            <tr>
+              <td class="feature-name"><span class="feature-indicator"></span>Nightlife Passport</td>
+              <td class="feature-details">Permanent digital registry of every venue visit, spirit redemption, and timeline milestone.</td>
+              <td class="feature-outcome">Continuous Reputation</td>
+            </tr>
+            <tr>
+              <td class="feature-name"><span class="feature-indicator gold"></span>Sensory Taste DNA</td>
+              <td class="feature-details">Automatic preference mapping derived from your actual spirit redemption history.</td>
+              <td class="feature-outcome">Curated Identity</td>
+            </tr>
+            <tr>
+              <td class="feature-name"><span class="feature-indicator"></span>Pour Score Protocol</td>
+              <td class="feature-details">A dynamic reliability metric based on visit consistency, dispute history, and community trust.</td>
+              <td class="feature-outcome">VIP Allocation</td>
+            </tr>
+            <tr>
+              <td class="feature-name"><span class="feature-indicator gold"></span>The Drop System</td>
+              <td class="feature-details">Weekly limited-allocation auctions and sales of highly-coveted, vintage spirits.</td>
+              <td class="feature-outcome">Elusive Exclusivity</td>
+            </tr>
+            <tr>
+              <td class="feature-name"><span class="feature-indicator"></span>Squad Ledger Splits</td>
+              <td class="feature-details">Multi-user shared wallets allowing group reservation and split financing.</td>
+              <td class="feature-outcome">Frictionless Grouping</td>
+            </tr>
+            <tr>
+              <td class="feature-name"><span class="feature-indicator gold"></span>Expiry Rescue & Gift</td>
+              <td class="feature-details">Proactive warning triggers allowing users to extend validity or transfer entitlements.</td>
+              <td class="feature-outcome">Zero-Loss Options</td>
+            </tr>
+            <tr>
+              <td class="feature-name"><span class="feature-indicator"></span>Verified Review Engine</td>
+              <td class="feature-details">Post-visit feedback portal accessible only to users with active redemption records.</td>
+              <td class="feature-outcome">High-Fidelity Signal</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ECONOMICS ROI & LIVE CALCULATOR (SCENE 7) -->
+  <section id="economics" style="background-color: var(--surface-dark); border-top: 1px solid var(--border-thin);">
+    <div class="container">
+      <div class="economics-grid">
+        <!-- Copy Column -->
+        <div>
+          <div class="eyebrow eyebrow-gold">✦ Economic Comparison</div>
+          <h2 class="section-title">Smarter asset allocation for your weekends.</h2>
+          <p class="section-desc" style="margin-bottom: 2.5rem;">
+            Why buy premium spirits peg-by-peg when you can secure the entire ledger? Adjust the slider to see how the mathematics align:
+          </p>
+          
+          <div class="pricing-board">
+            <div class="board-metric">
+              <div class="board-num" id="傳統支出的Pegs">₹6,250</div>
+              <div class="board-label">5 Pegs Traditional</div>
+            </div>
+            <div class="board-metric glow">
+              <div class="board-num" id="節省的費用">₹1,250</div>
+              <div class="board-label">Mehfil Savings (20%)</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Live Calculator Slider Column -->
+        <div class="calc-box">
+          <h3 style="font-size: 1.35rem; margin-bottom: 2rem;">Savings Ledger Calculator</h3>
+          
+          <div class="calc-slider-group">
+            <div class="calc-label-row">
+              <span class="calc-label">Choose Spirit Category</span>
+              <span class="calc-val" id="spirit-tier-label" style="font-size: 1rem; color: var(--accent-teal);">Deluxe Premium</span>
+            </div>
+            <select id="spirit-select" onchange="calculateSavings()" style="width:100%; background:var(--bg-midnight); border:1px solid var(--border-thin); color:var(--text-main); padding:0.85rem; border-radius:0.75rem; font-family:var(--font-body); font-size:0.9rem; cursor:pointer;">
+              <option value="premium">Deluxe Premium (e.g., JW Black Label / Grey Goose)</option>
+              <option value="luxury">Ultra Luxury (e.g., Macallan / Glenfiddich 15)</option>
+            </select>
+          </div>
+          
+          <div class="calc-slider-group" style="margin-bottom: 0;">
+            <div class="calc-label-row">
+              <span class="calc-label">Number of Visited Cups (Pegs)</span>
+              <span class="calc-val" id="cups-value">5 Pegs</span>
+            </div>
+            <input type="range" id="cups-slider" min="5" max="25" step="5" value="5" oninput="calculateSavings()">
+            <div style="display:flex; justify-content:space-between; margin-top:0.5rem; font-size:0.75rem; color:var(--text-dark); font-weight:600;">
+              <span>5 Pegs</span>
+              <span>15 Pegs</span>
+              <span>25 Pegs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- B2B VENUE PROTOCOL (SCENE 8) -->
+  <section id="venues">
+    <div class="container">
+      <div class="b2b-grid">
+        <!-- Copy Column -->
+        <div>
+          <div class="eyebrow">✦ Revenue & Retention Infrastructure</div>
+          <h2 class="section-title">Turn stagnant premium inventory into a recurring revenue engine.</h2>
+          <p style="margin-bottom: 2.5rem;">
+            Standard bottle sales bring a patron in for one night. Mehfil guarantees they return 4 more times, generating high-margin secondary sales.
+          </p>
+          <a href="#join" class="btn btn-teal">Bring Your Venue Online</a>
+        </div>
+        
+        <!-- B2B Feature Cards Grid -->
+        <div class="b2b-features">
+          <div class="b2b-card">
+            <div class="b2b-icon-wrap">✦</div>
+            <h3>5x Retention Loop</h3>
+            <p>Guarantees repeat visits and drives consistent high-margin auxiliary sales (tables, mixers, food).</p>
+          </div>
+          <div class="b2b-card">
+            <div class="b2b-icon-wrap">✦</div>
+            <h3>Midweek Demand Lift</h3>
+            <p>Directs premium users to your club during traditionally slower nights using targeted Drop notifications.</p>
+          </div>
+          <div class="b2b-card">
+            <div class="b2b-icon-wrap">✦</div>
+            <h3>Frictionless Operations</h3>
+            <p>Eliminates billing friction, card splits, and terminal delays. Scan dynamically in under 10 seconds.</p>
+          </div>
+          <div class="b2b-card">
+            <div class="b2b-icon-wrap">✦</div>
+            <h3>Upfront Cashflow</h3>
+            <p>Locks in full prepaid spirit values instantly. Unredeemed expired portions convert directly to high breakage margins.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST & COMPLIANCE SIGNALS (SCENE 9) -->
+  <section id="trust" style="border-bottom: 1px solid var(--border-thin);">
+    <div class="container">
+      <div style="max-width: 48rem; margin: 0 auto 5rem; text-align: center;">
+        <div class="eyebrow eyebrow-gold">✦ Trust & Safety Protocol</div>
+        <h2 class="section-title">Enterprise-grade trust. Sovereign compliance.</h2>
+      </div>
+      
+      <div class="trust-grid">
+        <div class="trust-card">
+          <div style="color:var(--accent-teal); font-weight:900; font-size:1.5rem;">✦</div>
+          <h3>Age Gate Verification</h3>
+          <p>Every user profile aligns directly with Aadhaar or DigiLocker API records. Seamless compliance with 21+ age governance.</p>
+        </div>
+        <div class="trust-card">
+          <div style="color:var(--accent-teal); font-weight:900; font-size:1.5rem;">✦</div>
+          <h3>Cryptographic Disputes</h3>
+          <p>Every pour logs a dynamic coordinate, unique device signature, and millisecond-accurate timestamp. Zero dispute vulnerability.</p>
+        </div>
+        <div class="trust-card">
+          <div style="color:var(--accent-teal); font-weight:900; font-size:1.5rem;">✦</div>
+          <h3>Legal Sovereignty</h3>
+          <p>Mehfil operates as a pure technological ledger. We never possess, sell, or transport physical stock. All logistics reside with licensed venues.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORIGINS (SCENE 10) -->
+  <section id="origins">
+    <div class="container">
+      <div class="origins-wrapper">
+        <!-- Quote Column -->
+        <div class="origins-quote">
+          <div class="eyebrow">✦ Behind the Protocol</div>
+          <h2 class="section-title" style="font-size: 2.25rem;">The Bangalore Genesis</h2>
+          <blockquote>
+            We reserved two premium bottles at a high-end Bangalore lounge. By midnight, both bottles were half-full. Carrying them home was impractical; leaving them behind felt like wasting money. Two weeks later, we returned to the same venue—our bottles were unverified, and we were forced to buy pegs at a steep markup. We realized that while hospitality has evolved, bottle storage is stuck in the past. We built Mehfil to give patrons the digital control they deserve.
+          </blockquote>
+        </div>
+        
+        <!-- Founders Column -->
+        <div class="founders-grid">
+          <div class="founder-card">
+            <div class="founder-role">Co-Founder / Business</div>
+            <h3 class="founder-name">Sudarshan Garg</h3>
+            <p class="founder-desc">12 years in enterprise software; 8 years directing premium events and club collaborations in Bangalore. Direct relationships with leading venue operators.</p>
+          </div>
+          <div class="founder-card">
+            <div class="founder-role">Co-Founder / Tech</div>
+            <h3 class="founder-name">Hargobind</h3>
+            <p class="founder-desc">Serial tech builder specializing in high-performance transactional engines, mobile architectures, and highly secure digital wallets.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAITLIST LEDGER & LEAD CAPTURE (SCENE 11) -->
+  <section id="join" style="background-color: var(--surface-dark); border-top: 1px solid var(--border-thin); border-bottom: 1px solid var(--border-thin);">
+    <div class="container">
+      <div style="max-width: 48rem; margin: 0 auto 4rem; text-align: center;">
+        <div class="eyebrow">✦ Bangalore Launch Ledger</div>
+        <h2 class="section-title">Claim your place in the Mehfil.</h2>
+        <p>Slots for our private beta are strictly allocated. Reserve your custom @username to lock in your identity and secure early access to the Bangalore registry.</p>
+      </div>
+      
+      <div class="lead-box">
+        <form class="lead-form" id="waitlist-form" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="full-name">Full Name</label>
+            <input type="text" id="full-name" placeholder="e.g., Sudarshan Garg" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="username">Claim Handle</label>
+            <div class="input-wrapper">
+              <span class="input-prefix">@</span>
+              <input type="text" id="username" placeholder="yourhandle" class="input-prefix-active" style="padding-left: 2.25rem;" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Work Email</label>
+            <input type="email" id="email" placeholder="name@company.com" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="role">Access Profile</label>
+            <select id="role" required>
+              <option value="patron">I am a Premium Patron</option>
+              <option value="owner">I am a Venue Owner</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="btn btn-teal" style="width: 100%; margin-top: 1rem; font-family: var(--font-display); letter-spacing: 0.05em;">
+            SECURE WAITLIST POSITION ➔
+          </button>
+        </form>
+        
+        <!-- Interactive Success State -->
+        <div class="form-success-state" id="success-state">
+          <div class="success-icon-wrap">✓</div>
+          <div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-main);">Welcome to the Mehfil</h3>
+            <p style="font-size: 0.9rem; line-height: 1.5;">
+              Reservation complete. We've locked in your custom handle <span id="reserved-handle" style="color: var(--accent-gold); font-weight: 600;">@username</span>. Early access details will arrive in your email shortly.
+            </p>
+          </div>
+          <button onclick="resetForm()" class="btn btn-secondary" style="padding: 0.5rem 1.5rem; font-size: 0.75rem;">Register Another</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCELERATED FAQ ACCORDION (SCENE 12) -->
+  <section id="faq">
+    <div class="container">
+      <div style="max-width: 48rem; margin: 0 auto 5rem; text-align: center;">
+        <div class="eyebrow eyebrow-gold">✦ Accelerated FAQ</div>
+        <h2 class="section-title">Crushing Objections</h2>
+      </div>
+      
+      <div class="faq-wrapper">
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            Is Mehfil legally compliant?
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-content">
+            <div class="faq-content-inner">
+              Yes. Mehfil does not sell alcohol. It operates as a secure digital ledger. All premium spirits are owned, kept in inventory, and served strictly by licensed partner venues in accordance with local regulations. Age verification is enforced via DigiLocker.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            What happens if a partner club closes permanently?
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-content">
+            <div class="faq-content-inner">
+              Your wallet balance is highly protected. Through our system-wide Onboarding Reserve Protocol, any remaining balance at a closed club will be credited back to your wallet as a flexible, cross-venue credit, or settled via partner agreements.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            Can I share my reserved bottle servings with my squad?
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-content">
+            <div class="faq-content-inner">
+              Absolutely. While the dynamic QR code must be scanned from your app, you can share your pour with anyone at your table. For collaborative squads, use the Squad Ledger Split to buy a bottle together, allowing any member to redeem.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            How long does my reserved bottle remain active?
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-content">
+            <div class="faq-content-inner">
+              Every reserved bottle remains fully active for 90 days. If you have remaining servings at day 75, we’ll trigger an alert. You can use Expiry Rescue to extend validity for 30 days, or gift a serving to a friend.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            What defines a single "serving"?
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="faq-content">
+            <div class="faq-content-inner">
+              A standard serving is defined precisely as one premium 60ml pour (double peg), poured directly from fresh stock at the venue.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GLOBAL FOOTER -->
+  <footer class="global-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-logo" style="display: flex; align-items: center; gap: 0.6rem;">
+            <img src="logo.png" onerror="this.onerror=null; this.src='mehfil_logo_hd.svg';" alt="Mehfil Logo" style="width: 2.2rem; height: 2.2rem; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(88,255,212,0.2));" />
+            <span>mehfil<span>.ing</span></span>
+          </div>
+          <p style="font-size: 0.8rem; line-height: 1.5; color: oklch(55% 0.005 240);">
+            The permanent status & community layer of India's nightlife. Stamped in Bangalore, India.
+          </p>
+        </div>
+        
+        <div>
+          <div class="footer-title">Navigation</div>
+          <div class="footer-links">
+            <a href="#ecosystem">The Ecosystem</a>
+            <a href="#features">Ecosystem Specs</a>
+            <a href="#economics">Economic ROI</a>
+            <a href="#venues">Venue Protocol</a>
+          </div>
+        </div>
+        
+        <div class="footer-regulatory">
+          <div class="footer-title">Regulatory</div>
+          <p>
+            Mehfil is a pure-play technology platform. It is not an alcohol distributor or seller. All spirits are owned and served strictly by licensed hospitality venues. Registered users must be 21+ (or of legal drinking age in their respective state). Enjoy responsibly.
+          </p>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <span>© 2026 Mehfil.ing. All rights reserved.</span>
+        <div class="footer-socials">
+          <a href="#">Instagram</a>
+          <a href="#">Twitter / X</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       12. INTERACTIVE JAVASCRIPT LOGIC
+       ========================================================================= -->
+  <script>
+    /* 1. Problem Stepper & Interactive Bottle Visuals */
+    const liquidLevels = [
+      "M20 115 L20 220 Q20 232 50 232 Q80 232 80 220 L80 115Z",    /* Full */
+      "M20 170 L20 220 Q20 232 50 232 Q80 232 80 220 L80 170Z",    /* Half */
+      "M20 225 L20 220 Q20 232 50 232 Q80 232 80 220 L80 225Z",    /* Ghost / Empty */
+      "M20 232 L20 220 Q20 232 50 232 Q80 232 80 220 L80 232Z"     /* Pegs / Invisible */
+    ];
+    
+    const statusLabels = [
+      "FULL · ₹12,000 VALUE",
+      "HALF DECREMENT · 6 SERVINGS REMAINING",
+      "NO RECORD · GHOST STATUS",
+      "REORDER MARGINS · ₹11,700 CHARGED"
+    ];
+
+    function activateStep(index) {
+      // Toggle active classes on stepper cards
+      const cards = document.querySelectorAll('.step-card');
+      cards.forEach((card, idx) => {
+        if (idx === index) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      });
+      
+      // Update visual liquid levels inside the bottle SVG
+      const liquidElement = document.getElementById('bottle-liquid');
+      const labelElement = document.getElementById('bottle-status-label');
+      
+      liquidElement.setAttribute('d', liquidLevels[index]);
+      labelElement.textContent = statusLabels[index];
+      
+      // Vary liquid opacity depending on level
+      if (index === 0) {
+        liquidElement.setAttribute('opacity', '0.85');
+        liquidElement.setAttribute('fill', 'oklch(82.26% 0.11 86.42)'); // Golden spirit
+      } else if (index === 1) {
+        liquidElement.setAttribute('opacity', '0.6');
+        liquidElement.setAttribute('fill', 'oklch(82.26% 0.11 86.42)');
+      } else if (index === 2) {
+        liquidElement.setAttribute('opacity', '0.2');
+        liquidElement.setAttribute('fill', 'oklch(60% 0.05 20)'); // Faded red/ghost
+      } else {
+        liquidElement.setAttribute('opacity', '0'); // Reordered peg tax invoice
+      }
+    }
+
+    /* 2. Economics Pricing Calculator */
+    const basePegRates = {
+      premium: 1250, // ₹1,250 per traditional peg
+      luxury: 2500   // ₹2,500 per traditional peg
+    };
+
+    const baseMehfilRates = {
+      premium: 5000, // ₹5,000 for a 5-peg equivalent reserved bottle
+      luxury: 10000  // ₹10,000 for a 5-peg equivalent reserved bottle
+    };
+
+    function calculateSavings() {
+      const select = document.getElementById('spirit-select');
+      const slider = document.getElementById('cups-slider');
+      const spiritTier = select.value;
+      const pegsAmount = parseInt(slider.value);
+      
+      // Update slider display label
+      document.getElementById('cups-value').textContent = pegsAmount + " Pegs";
+      document.getElementById('spirit-tier-label').textContent = spiritTier === 'premium' ? 'Deluxe Premium' : 'Ultra Luxury';
+      
+      // Calculate costs
+      const pegRate = basePegRates[spiritTier];
+      const bottleRate = baseMehfilRates[spiritTier];
+      
+      const traditionalTotal = pegRate * pegsAmount;
+      const bottleCountRequired = pegsAmount / 5;
+      const mehfilTotal = bottleRate * bottleCountRequired;
+      const totalSavings = traditionalTotal - mehfilTotal;
+      
+      // Update output metrics on screen with animations
+      animateValue("傳統支出的Pegs", traditionalTotal);
+      animateValue("節省的費用", totalSavings);
+    }
+
+    // Helper to smoothly animate counting changes
+    function animateValue(id, targetVal) {
+      const el = document.getElementById(id);
+      let currentVal = parseInt(el.textContent.replace(/[^\d]/g, '')) || 0;
+      const stepsCount = 15;
+      const increment = (targetVal - currentVal) / stepsCount;
+      let count = 0;
+      
+      const interval = setInterval(() => {
+        currentVal += increment;
+        count++;
+        el.textContent = "₹" + Math.round(currentVal).toLocaleString('en-IN');
+        if (count >= stepsCount) {
+          clearInterval(interval);
+          el.textContent = "₹" + targetVal.toLocaleString('en-IN');
+        }
+      }, 20);
+    }
+
+    // Init calculator
+    window.addEventListener('DOMContentLoaded', () => {
+      calculateSavings();
+    });
+
+    /* 3. Waitlist Form Conversion Submission */
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      
+      const form = document.getElementById('waitlist-form');
+      const successState = document.getElementById('success-state');
+      const handleInput = document.getElementById('username');
+      const reservedHandle = document.getElementById('reserved-handle');
+      
+      reservedHandle.textContent = "@" + handleInput.value.toLowerCase().replace(/[^a-z0-9_.]/g, "");
+      
+      // Fast transition success state
+      form.style.display = 'none';
+      successState.style.display = 'flex';
+    }
+
+    function resetForm() {
+      const form = document.getElementById('waitlist-form');
+      const successState = document.getElementById('success-state');
+      
+      form.reset();
+      form.style.display = 'flex';
+      successState.style.display = 'none';
+    }
+
+    /* 4. FAQ Accordion Expanding */
+    function toggleFaq(button) {
+      const faqItem = button.parentElement;
+      const isOpen = faqItem.classList.contains('open');
+      
+      // Close other accordion items
+      const allItems = document.querySelectorAll('.faq-item');
+      allItems.forEach(item => item.classList.remove('open'));
+      
+      // Toggle current
+      if (!isOpen) {
+        faqItem.classList.add('open');
+      }
+    }
+  </script>
+</body>
+</html>

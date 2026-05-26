@@ -57,115 +57,74 @@ export default function Problem() {
   };
 
   useEffect(() => {
+    // Force a ScrollTrigger refresh after a tiny timeout to ensure Next.js layout is fully calculated
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
     let ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: triggerRef.current,
-        start: "top top",
-        // Pin the section for its full height; GSAP will add spacing automatically
-        pin: true,
-        // End after enough scroll to cover all 4 steps (≈400% of viewport)
-        end: "+=400%",
-        scrub: 0.5,
-        onUpdate: (self) => {
-          if (manualOverride.current) return;
-          const progress = self.progress; // 0‑1
-          const step = Math.min(3, Math.floor(progress * 4));
-          setActiveStep(step);
-        },
+      let mm = gsap.matchMedia();
+
+      // Enable GSAP scroll pinning and interactive stepper strictly on desktop viewports
+      mm.add("(min-width: 1024px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerRef.current,
+            start: "top top",
+            pin: true,
+            end: "+=300%",
+            scrub: 0.5,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (manualOverride.current) return;
+              const progress = self.progress; // 0‑1
+              const step = Math.min(3, Math.floor(progress * 4));
+              setActiveStep(step);
+            },
+          },
+        });
+
+        // Dummy tween to establish a timeline duration so scrubbing works perfectly
+        tl.to({}, { duration: 1 });
       });
     }, triggerRef);
-    return () => ctx.revert();
+
+    return () => {
+      ctx.revert();
+      clearTimeout(timer);
+    };
   }, []);
 
-  const bottleVisuals = [
-    // Step 0: Full bottle (gold)
-    <motion.div key="s0" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.5 }} className="flex flex-col items-center">
-      <svg viewBox="0 0 100 250" className="w-20 h-52 drop-shadow-[0_0_24px_rgba(245,196,83,0.35)]">
-        <rect x="40" y="18" width="20" height="38" rx="3" fill="#1b1b22" stroke="rgba(245,196,83,0.6)" strokeWidth="1.5"/>
-        <path d="M25 56 Q20 78 20 118 L20 218 Q20 233 50 233 Q80 233 80 218 L80 118 Q80 78 75 56Z" fill="#1b1b22" stroke="rgba(245,196,83,0.6)" strokeWidth="1.5"/>
-        <path d="M22 98 Q20 108 20 128 L20 218 Q20 230 50 230 Q80 230 80 218 L80 128 Q80 108 78 98Z" fill="oklch(82.26% 0.11 86.42)" opacity="0.85"/>
-        <rect x="30" y="108" width="40" height="56" rx="2" fill="#fff" opacity="0.08"/>
-        <text x="50" y="142" textAnchor="middle" fontSize="5.5" fill="#fef08a" fontWeight="bold">PREMIUM</text>
-      </svg>
-      <div className="mt-3 text-[9px] text-brand-gold font-bold uppercase tracking-widest bg-brand-gold/10 border border-brand-gold/20 px-3 py-1 rounded-full">Full · ₹12,000 paid</div>
-    </motion.div>,
-
-    // Step 1: Half bottle (warning)
-    <motion.div key="s1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.5 }} className="flex flex-col items-center">
-      <svg viewBox="0 0 100 250" className="w-20 h-52 drop-shadow-[0_0_16px_rgba(239,68,68,0.25)]">
-        <rect x="40" y="18" width="20" height="38" rx="3" fill="#1b1b22" stroke="rgba(239,68,68,0.4)" strokeWidth="1.5"/>
-        <path d="M25 56 Q20 78 20 118 L20 218 Q20 233 50 233 Q80 233 80 218 L80 118 Q80 78 75 56Z" fill="#1b1b22" stroke="rgba(239,68,68,0.4)" strokeWidth="1.5"/>
-        <path d="M20 158 L20 218 Q20 230 50 230 Q80 230 80 218 L80 158Z" fill="oklch(82.26% 0.11 86.42)" opacity="0.65"/>
-        <line x1="20" y1="158" x2="80" y2="158" stroke="rgba(239,68,68,0.5)" strokeWidth="1" strokeDasharray="3 2"/>
-      </svg>
-      <div className="mt-3 text-[9px] text-red-400 font-bold uppercase tracking-widest bg-red-950/30 border border-red-500/20 px-3 py-1 rounded-full">Half consumed — 1 AM</div>
-    </motion.div>,
-
-    // Step 2: Ghost bottle (forgotten)
-    <motion.div key="s2" initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.5 }} className="flex flex-col items-center relative">
-      <svg viewBox="0 0 100 250" className="w-20 h-52 opacity-20">
-        <rect x="40" y="18" width="20" height="38" rx="3" fill="none" stroke="#fff" strokeWidth="1.5" strokeDasharray="4 3"/>
-        <path d="M25 56 Q20 78 20 118 L20 218 Q20 233 50 233 Q80 233 80 218 L80 118 Q80 78 75 56Z" fill="none" stroke="#fff" strokeWidth="1.5" strokeDasharray="4 3"/>
-        <line x1="14" y1="118" x2="86" y2="118" stroke="#ef4444" strokeWidth="2" opacity="0.8"/>
-      </svg>
-      <div className="mt-3 text-[9px] text-red-500 font-bold uppercase tracking-widest bg-red-950/40 border border-red-500/20 px-3 py-1 rounded-full">No record. No proof.</div>
-    </motion.div>,
-
-    // Step 3: Bill (overpaid)
-    <motion.div key="s3" initial={{ opacity: 0, y: 20, rotate: -3 }} animate={{ opacity: 1, y: 0, rotate: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.5, ease: [0.16,1,0.3,1] }} className="flex flex-col items-center">
-      <div className="w-44 bg-white text-gray-800 rounded-xl shadow-2xl overflow-hidden">
-        <div className="bg-gray-100 px-4 py-2 border-b border-gray-200">
-          <div className="text-[9px] font-bold uppercase tracking-wide text-gray-500">Club Invoice</div>
-          <div className="text-[8px] text-gray-400">Return visit · 2 weeks later</div>
-        </div>
-        <div className="px-4 py-3 space-y-1.5">
-          <div className="flex justify-between text-[10px] font-semibold">
-            <span>6 Pegs JW Black</span><span>₹9,000</span>
-          </div>
-          <div className="flex justify-between text-[8px] text-gray-500">
-            <span>Service charge</span><span>₹900</span>
-          </div>
-          <div className="flex justify-between text-[8px] text-gray-500">
-            <span>Excise + tax</span><span>₹1,800</span>
-          </div>
-          <div className="border-t border-dashed border-gray-300 pt-1.5 flex justify-between font-black text-red-600 text-xs">
-            <span>Total</span><span>₹11,700</span>
-          </div>
-        </div>
-      </div>
-      <div className="mt-3 text-[9px] text-red-400 font-bold uppercase tracking-widest text-glow-red">+25% markup on pegs you already bought</div>
-    </motion.div>,
-  ];
-
   return (
-    // triggerRef wraps the entire scroll-pinned section — must be tall enough for 4 stages
-    <div ref={triggerRef} id="problem-friction" className="relative">
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#080809]">
-
+    <div id="problem-friction" className="relative bg-[#080809] w-full">
+      
+      {/* ========================================================================= */}
+      {/* 1. DESKTOP VIEWPORT LAYOUT (min-width: 1024px) - Scroll pinned interactive stepper */}
+      {/* ========================================================================= */}
+      <div ref={triggerRef} className="hidden lg:block h-screen overflow-visible relative w-full">
         {/* Ambient glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-950/8 rounded-full blur-[180px] pointer-events-none" />
 
-        <div ref={containerRef} className="max-w-7xl mx-auto px-6 lg:px-12 h-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="relative w-full pt-16 max-w-7xl mx-auto px-6 lg:px-12 h-full grid grid-cols-12 gap-8 items-center" ref={containerRef}>
 
-          {/* Left: Copy + stepper */}
-          <div className="lg:col-span-5 flex flex-col justify-center">
-
-            <span className="text-[10px] font-bold uppercase tracking-widest text-red-400 inline-flex items-center gap-2 mb-4">
+          {/* Left Side: Copy + Stepper */}
+          <div className="col-span-5 flex flex-col justify-center">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-red-400 inline-flex items-center gap-2 mb-3">
               <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
               The Current Friction
             </span>
 
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-[1.1] mb-4">
+            <h2 className="font-display font-extrabold text-3xl lg:text-4.5xl text-white tracking-tight leading-[1.2] mb-3">
               Nightlife forgets its customers<br />
               <span className="text-red-400">after every night.</span>
             </h2>
 
-            <p className="text-gray-400 text-sm font-light leading-relaxed mb-8 max-w-sm">
+            <p className="text-gray-400 text-xs font-light leading-relaxed mb-6 max-w-sm">
               Premium bottles become wasted capital. No digital record, no ownership trail. See how the current cycle plays out:
             </p>
 
             {/* Scroll progress bar */}
-            <div className="flex gap-1.5 mb-6">
+            <div className="flex gap-1.5 mb-5">
               {steps.map((_, i) => (
                 <div
                   key={i}
@@ -174,13 +133,13 @@ export default function Problem() {
               ))}
             </div>
 
-            {/* Step buttons */}
-            <div className="flex flex-col gap-2">
+            {/* Interactive Step Buttons */}
+            <div className="flex flex-col gap-1.5">
               {steps.map((step, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleStepClick(idx)}
-                  className={`text-left rounded-xl px-4 py-3 transition-all duration-300 border ${
+                  className={`text-left rounded-xl px-4 py-2.5 transition-all duration-300 border ${
                     activeStep === idx
                       ? "bg-red-950/20 border-red-400/20 text-white"
                       : "bg-transparent border-transparent text-gray-600 hover:text-gray-400"
@@ -188,32 +147,31 @@ export default function Problem() {
                 >
                   <div className="flex items-center gap-2 mb-0.5">
                     <span className={`${activeStep === idx ? "opacity-100" : "opacity-40"}`}>{step.icon}</span>
-                    <span className="text-[9px] font-bold uppercase tracking-widest">{step.badge}</span>
+                    <span className="text-[8px] font-bold uppercase tracking-widest">{step.badge}</span>
                   </div>
-                  <div className={`text-sm font-semibold leading-snug ${activeStep === idx ? "text-white" : "text-gray-600"}`}>
+                  <div className={`text-xs font-semibold leading-snug ${activeStep === idx ? "text-white" : "text-gray-600"}`}>
                     {step.title}
                   </div>
                 </button>
               ))}
             </div>
 
-            <p className="text-[10px] text-gray-700 mt-6 uppercase tracking-wider font-semibold">
+            <p className="text-[8px] text-gray-700 mt-5 uppercase tracking-wider font-semibold">
               Scroll to progress · or click any stage
             </p>
           </div>
 
-          {/* Right: Visual stage */}
-          <div className="lg:col-span-7 flex items-center justify-center h-full relative z-10">
-
+          {/* Right Side: Visual Stage */}
+          <div className="col-span-7 flex flex-col items-center justify-center h-full relative z-10">
             {/* VIP table silhouette */}
-            <div className="absolute bottom-16 w-72 h-28 bg-[#101014] border border-white/[0.04] rounded-[50%] shadow-[0_20px_60px_rgba(0,0,0,0.9)] z-0 flex items-center justify-center">
+            <div className="absolute bottom-12 w-64 h-24 bg-[#101014] border border-white/[0.04] rounded-[50%] shadow-[0_20px_60px_rgba(0,0,0,0.9)] z-0 flex items-center justify-center">
               <div className="w-[88%] h-[88%] border border-dashed border-white/[0.03] rounded-[50%]" />
             </div>
 
             {/* Animated bottle/receipt visuals */}
-            <div className="relative z-10 flex flex-col items-center justify-center h-80">
+            <div className="relative z-10 flex flex-col items-center justify-center h-64">
               <AnimatePresence mode="wait">
-                {bottleVisuals[activeStep]}
+                <BottleVisual step={activeStep} />
               </AnimatePresence>
             </div>
 
@@ -226,19 +184,221 @@ export default function Problem() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.35 }}
-                  className="bg-brand-charcoal/60 border border-white/[0.04] rounded-2xl px-5 py-4 backdrop-blur-sm"
+                  className="bg-brand-charcoal/60 border border-white/[0.04] rounded-xl px-4 py-3.5 backdrop-blur-sm"
                 >
-                  <p className="text-sm text-gray-300 font-light leading-relaxed">
+                  <p className="text-xs text-gray-300 font-light leading-relaxed">
                     {steps[activeStep].description}
                   </p>
                 </motion.div>
               </AnimatePresence>
             </div>
-
           </div>
 
         </div>
       </div>
+
+      {/* ========================================================================= */}
+      {/* 2. MOBILE / TABLET VIEWPORT LAYOUT (max-width: 1023px) - Static visual timeline */}
+      {/* ========================================================================= */}
+      <div className="lg:hidden w-full px-6 py-16 flex flex-col relative">
+        <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[320px] h-[320px] bg-red-950/5 rounded-full blur-[100px] pointer-events-none" />
+
+        {/* Section Header */}
+        <div className="mb-8 text-left">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-red-400 inline-flex items-center gap-2 mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
+            The Current Friction
+          </span>
+          <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight leading-tight mb-3">
+            Nightlife forgets its customers<br />
+            <span className="text-red-400">after every night.</span>
+          </h2>
+          <p className="text-gray-400 text-xs font-light leading-relaxed max-w-md">
+            Premium bottles become wasted capital. No digital record, no ownership trail. See how the current cycle plays out across all 4 stages:
+          </p>
+        </div>
+
+        {/* Stacked Stage Cards */}
+        <div className="flex flex-col gap-6 w-full relative z-10">
+          {steps.map((step, idx) => (
+            <div 
+              key={idx}
+              className="bg-brand-charcoal/40 border border-white/[0.04] rounded-2xl p-5 sm:p-6 relative overflow-hidden"
+            >
+              {/* Radial gradient background light */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-red-950/[0.04] rounded-full blur-3xl pointer-events-none" />
+              
+              {/* Card Header with Icon + Badge */}
+              <div className="flex items-center gap-2 mb-3.5">
+                <span className="p-1.5 rounded-xl bg-red-950/20 text-red-400 border border-red-500/10 shrink-0">
+                  {step.icon}
+                </span>
+                <span className="text-[9px] font-bold uppercase tracking-widest text-red-400">
+                  {step.badge}
+                </span>
+              </div>
+
+              {/* Title & Description */}
+              <h3 className="font-display font-extrabold text-lg sm:text-xl text-white mb-2 leading-snug">
+                {step.title}
+              </h3>
+              <p className="text-gray-400 text-xs font-light leading-relaxed mb-6">
+                {step.description}
+              </p>
+
+              {/* Centered Graphic Element */}
+              <div className="flex justify-center items-center py-5 bg-[#0a0a0c] border border-white/[0.02] rounded-xl relative overflow-hidden h-52">
+                {/* Visual VIP Table representation for mobile cards */}
+                <div className="absolute -bottom-8 w-44 h-16 bg-[#16161c]/30 border border-white/[0.02] rounded-[50%] z-0" />
+                <div className="relative z-10 flex items-center justify-center scale-90">
+                  <BottleVisual step={idx} isMobile />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 }
+
+const BottleVisual = ({ step, isMobile = false }: { step: number; isMobile?: boolean }) => {
+  // For mobile, return static fully visible layout to bypass any Framer Motion viewport bugs in static loops
+  if (isMobile) {
+    switch (step) {
+      case 0:
+        return (
+          <div className="flex flex-col items-center">
+            <svg viewBox="0 0 100 250" className="w-16 h-48 drop-shadow-[0_0_24px_rgba(245,196,83,0.35)]">
+              <rect x="40" y="18" width="20" height="38" rx="3" fill="#1b1b22" stroke="rgba(245,196,83,0.6)" strokeWidth="1.5"/>
+              <path d="M25 56 Q20 78 20 118 L20 218 Q20 233 50 233 Q80 233 80 218 L80 118 Q80 78 75 56Z" fill="#1b1b22" stroke="rgba(245,196,83,0.6)" strokeWidth="1.5"/>
+              <path d="M22 98 Q20 108 20 128 L20 218 Q20 230 50 230 Q80 230 80 218 L80 128 Q80 108 78 98Z" fill="oklch(82.26% 0.11 86.42)" opacity="0.85"/>
+              <rect x="30" y="108" width="40" height="56" rx="2" fill="#fff" opacity="0.08"/>
+              <text x="50" y="142" textAnchor="middle" fontSize="5.5" fill="#fef08a" fontWeight="bold">PREMIUM</text>
+            </svg>
+            <div className="mt-2 text-[8px] text-brand-gold font-bold uppercase tracking-widest bg-brand-gold/10 border border-brand-gold/20 px-2.5 py-0.5 rounded-full">Full · ₹12,000 paid</div>
+          </div>
+        );
+      case 1:
+        return (
+          <div className="flex flex-col items-center">
+            <svg viewBox="0 0 100 250" className="w-16 h-48 drop-shadow-[0_0_16px_rgba(239,68,68,0.25)]">
+              <rect x="40" y="18" width="20" height="38" rx="3" fill="#1b1b22" stroke="rgba(239,68,68,0.4)" strokeWidth="1.5"/>
+              <path d="M25 56 Q20 78 20 118 L20 218 Q20 233 50 233 Q80 233 80 218 L80 118 Q80 78 75 56Z" fill="#1b1b22" stroke="rgba(239,68,68,0.4)" strokeWidth="1.5"/>
+              <path d="M20 158 L20 218 Q20 230 50 230 Q80 230 80 218 L80 158Z" fill="oklch(82.26% 0.11 86.42)" opacity="0.65"/>
+              <line x1="20" y1="158" x2="80" y2="158" stroke="rgba(239,68,68,0.5)" strokeWidth="1" strokeDasharray="3 2"/>
+            </svg>
+            <div className="mt-2 text-[8px] text-red-400 font-bold uppercase tracking-widest bg-red-950/30 border border-red-500/20 px-2.5 py-0.5 rounded-full">Half consumed — 1 AM</div>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="flex flex-col items-center relative">
+            <svg viewBox="0 0 100 250" className="w-16 h-48 opacity-20">
+              <rect x="40" y="18" width="20" height="38" rx="3" fill="none" stroke="#fff" strokeWidth="1.5" strokeDasharray="4 3"/>
+              <path d="M25 56 Q20 78 20 118 L20 218 Q20 233 50 233 Q80 233 80 218 L80 118 Q80 78 75 56Z" fill="none" stroke="#fff" strokeWidth="1.5" strokeDasharray="4 3"/>
+              <line x1="14" y1="118" x2="86" y2="118" stroke="#ef4444" strokeWidth="2" opacity="0.8"/>
+            </svg>
+            <div className="mt-2 text-[8px] text-red-500 font-bold uppercase tracking-widest bg-red-950/40 border border-red-500/20 px-2.5 py-0.5 rounded-full">No record. No proof.</div>
+          </div>
+        );
+      case 3:
+        return (
+          <div className="flex flex-col items-center">
+            <div className="w-36 bg-white text-gray-800 rounded-xl shadow-2xl overflow-hidden">
+              <div className="bg-gray-100 px-3 py-1.5 border-b border-gray-200">
+                <div className="text-[8px] font-bold uppercase tracking-wide text-gray-500">Club Invoice</div>
+                <div className="text-[7px] text-gray-400">Return visit · 2 weeks later</div>
+              </div>
+              <div className="px-3 py-2 space-y-1">
+                <div className="flex justify-between text-[9px] font-semibold">
+                  <span>6 Pegs JW Black</span><span>₹9,000</span>
+                </div>
+                <div className="flex justify-between text-[7px] text-gray-500">
+                  <span>Service charge</span><span>₹900</span>
+                </div>
+                <div className="flex justify-between text-[7px] text-gray-500">
+                  <span>Excise + tax</span><span>₹1,800</span>
+                </div>
+                <div className="border-t border-dashed border-gray-300 pt-1 flex justify-between font-black text-red-600 text-[10px]">
+                  <span>Total</span><span>₹11,700</span>
+                </div>
+              </div>
+            </div>
+            <div className="mt-2 text-[8px] text-red-400 font-bold uppercase tracking-widest text-glow-red text-center px-2 leading-tight">+25% markup on pegs you already bought</div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  }
+
+  // For desktop, render premium AnimatePresence-compatible motion.div layouts
+  switch (step) {
+    case 0:
+      return (
+        <motion.div key="s0" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }} className="flex flex-col items-center">
+          <svg viewBox="0 0 100 250" className="w-16 h-48 drop-shadow-[0_0_24px_rgba(245,196,83,0.35)]">
+            <rect x="40" y="18" width="20" height="38" rx="3" fill="#1b1b22" stroke="rgba(245,196,83,0.6)" strokeWidth="1.5"/>
+            <path d="M25 56 Q20 78 20 118 L20 218 Q20 233 50 233 Q80 233 80 218 L80 118 Q80 78 75 56Z" fill="#1b1b22" stroke="rgba(245,196,83,0.6)" strokeWidth="1.5"/>
+            <path d="M22 98 Q20 108 20 128 L20 218 Q20 230 50 230 Q80 230 80 218 L80 128 Q80 108 78 98Z" fill="oklch(82.26% 0.11 86.42)" opacity="0.85"/>
+            <rect x="30" y="108" width="40" height="56" rx="2" fill="#fff" opacity="0.08"/>
+            <text x="50" y="142" textAnchor="middle" fontSize="5.5" fill="#fef08a" fontWeight="bold">PREMIUM</text>
+          </svg>
+          <div className="mt-2 text-[8px] text-brand-gold font-bold uppercase tracking-widest bg-brand-gold/10 border border-brand-gold/20 px-2.5 py-0.5 rounded-full">Full · ₹12,000 paid</div>
+        </motion.div>
+      );
+    case 1:
+      return (
+        <motion.div key="s1" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }} className="flex flex-col items-center">
+          <svg viewBox="0 0 100 250" className="w-16 h-48 drop-shadow-[0_0_16px_rgba(239,68,68,0.25)]">
+            <rect x="40" y="18" width="20" height="38" rx="3" fill="#1b1b22" stroke="rgba(239,68,68,0.4)" strokeWidth="1.5"/>
+            <path d="M25 56 Q20 78 20 118 L20 218 Q20 233 50 233 Q80 233 80 218 L80 118 Q80 78 75 56Z" fill="#1b1b22" stroke="rgba(239,68,68,0.4)" strokeWidth="1.5"/>
+            <path d="M20 158 L20 218 Q20 230 50 230 Q80 230 80 218 L80 158Z" fill="oklch(82.26% 0.11 86.42)" opacity="0.65"/>
+            <line x1="20" y1="158" x2="80" y2="158" stroke="rgba(239,68,68,0.5)" strokeWidth="1" strokeDasharray="3 2"/>
+          </svg>
+          <div className="mt-2 text-[8px] text-red-400 font-bold uppercase tracking-widest bg-red-950/30 border border-red-500/20 px-2.5 py-0.5 rounded-full">Half consumed — 1 AM</div>
+        </motion.div>
+      );
+    case 2:
+      return (
+        <motion.div key="s2" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4 }} className="flex flex-col items-center relative">
+          <svg viewBox="0 0 100 250" className="w-16 h-48 opacity-20">
+            <rect x="40" y="18" width="20" height="38" rx="3" fill="none" stroke="#fff" strokeWidth="1.5" strokeDasharray="4 3"/>
+            <path d="M25 56 Q20 78 20 118 L20 218 Q20 233 50 233 Q80 233 80 218 L80 118 Q80 78 75 56Z" fill="none" stroke="#fff" strokeWidth="1.5" strokeDasharray="4 3"/>
+            <line x1="14" y1="118" x2="86" y2="118" stroke="#ef4444" strokeWidth="2" opacity="0.8"/>
+          </svg>
+          <div className="mt-2 text-[8px] text-red-500 font-bold uppercase tracking-widest bg-red-950/40 border border-red-500/20 px-2.5 py-0.5 rounded-full">No record. No proof.</div>
+        </motion.div>
+      );
+    case 3:
+      return (
+        <motion.div key="s3" initial={{ opacity: 0, y: 15, rotate: -2 }} animate={{ opacity: 1, y: 0, rotate: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col items-center">
+          <div className="w-36 bg-white text-gray-800 rounded-xl shadow-2xl overflow-hidden">
+            <div className="bg-gray-100 px-3 py-1.5 border-b border-gray-200">
+              <div className="text-[8px] font-bold uppercase tracking-wide text-gray-500">Club Invoice</div>
+              <div className="text-[7px] text-gray-400">Return visit · 2 weeks later</div>
+            </div>
+            <div className="px-3 py-2 space-y-1">
+              <div className="flex justify-between text-[9px] font-semibold">
+                <span>6 Pegs JW Black</span><span>₹9,000</span>
+              </div>
+              <div className="flex justify-between text-[7px] text-gray-500">
+                <span>Service charge</span><span>₹900</span>
+              </div>
+              <div className="flex justify-between text-[7px] text-gray-500">
+                <span>Excise + tax</span><span>₹1,800</span>
+              </div>
+              <div className="border-t border-dashed border-gray-300 pt-1 flex justify-between font-black text-red-600 text-[10px]">
+                <span>Total</span><span>₹11,700</span>
+              </div>
+            </div>
+          </div>
+          <div className="mt-2 text-[8px] text-red-400 font-bold uppercase tracking-widest text-glow-red text-center px-2 leading-tight">+25% markup on pegs you already bought</div>
+        </motion.div>
+      );
+    default:
+      return null;
+  }
+};

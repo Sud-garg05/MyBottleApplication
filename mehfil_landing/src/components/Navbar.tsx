@@ -36,16 +36,25 @@ export default function Navbar() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-0 left-0 w-full z-50 px-6 py-4 md:px-12 md:py-6 transition-all duration-300"
       >
-        <div 
-          className={`max-w-7xl mx-auto flex items-center justify-between px-6 py-3.5 rounded-full transition-all duration-300 ${
-            isScrolled 
-              ? "backdrop-blur-lg bg-brand-black/85 border border-brand-teal/20 shadow-[0_12px_40px_rgba(45,212,191,0.15)]" 
+        <div
+          className={`max-w-7xl mx-auto flex items-center justify-between px-6 py-3.5 rounded-full transition-all duration-300 ${isScrolled
+              ? "backdrop-blur-lg bg-brand-black/85 border border-brand-teal/20 shadow-[0_12px_40px_rgba(45,212,191,0.15)]"
               : "backdrop-blur-md bg-brand-black/40 border border-white/[0.04] shadow-[0_8px_32px_rgba(5,5,6,0.5)]"
-          }`}
+            }`}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <span className="font-display font-extrabold text-xl tracking-tight text-white transition-colors group-hover:text-brand-teal">
+          <Link href="/" className="flex items-center gap-2.5 group py-1">
+            <img 
+              src="/logo.png" 
+              onError={(e) => {
+                const target = e.currentTarget;
+                target.onerror = null;
+                target.src = "/mehfil_logo_hd.svg";
+              }}
+              alt="Mehfil Logo" 
+              className="w-8.5 h-8.5 object-contain filter drop-shadow-[0_2px_10px_rgba(88,255,212,0.25)] transition-transform duration-300 group-hover:scale-105" 
+            />
+            <span className="font-display font-extrabold text-xl tracking-tight text-white transition-colors group-hover:text-brand-teal logo-font">
               mehfil<span className="text-brand-teal group-hover:text-white">.ing</span>
             </span>
           </Link>

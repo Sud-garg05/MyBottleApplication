@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mehfil — Club Owner Pitch Deck</title>
+  
+  <!-- SEO & Brand Meta -->
+  <meta name="description" content="Mehfil — Revenue & Retention Infrastructure for Your Club. How to turn every bottle you sell into 5 guaranteed visits.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #07050d;
+      --bg-card: rgba(20, 16, 32, 0.65);
+      --bg-card-hover: rgba(28, 22, 44, 0.85);
+      --border-color: rgba(223, 183, 108, 0.15);
+      --border-glow: rgba(223, 183, 108, 0.3);
+      --text-main: #f3f1f6;
+      --text-muted: #a39eb0;
+      
+      /* Mehfil Gold Palette */
+      --gold-light: #f6dfaf;
+      --gold: #dfb76c;
+      --gold-dark: #c39241;
+      --gold-gradient: linear-gradient(135deg, #f6dfaf 0%, #dfb76c 50%, #c39241 100%);
+      --gold-glow: 0 0 20px rgba(223, 183, 108, 0.25);
+      
+      /* Accents */
+      --accent-purple: #8b5cf6;
+      --accent-red: #ef4444;
+      --accent-green: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(223, 183, 108, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(7, 5, 13, 1) 0%, rgba(13, 9, 24, 1) 100%);
+      color: var(--text-main);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* Presentation Wrapper */
+    .presentation-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2.5rem;
+    }
+
+    /* Header Controls */
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 100;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+
+    .brand-logo svg {
+      width: 28px;
+      height: 28px;
+      fill: url(#goldGradientLogo);
+    }
+
+    .deck-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--gold-light);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    /* Navigation Sidebar / List Toggler */
+    .menu-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
+    }
+
+    .menu-btn:hover {
+      background: rgba(223, 183, 108, 0.1);
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+
+    /* Slide Arena */
+    .slide-viewport {
+      flex: 1;
+      width: 100%;
+      max-width: 1100px;
+      margin: 1.5rem 0;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+      pointer-events: none;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    /* Slide Content Typo & Structures */
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+    }
+
+    .slide-title-wrapper {
+      margin-bottom: 2rem;
+    }
+
+    .slide-eyebrow {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .slide-h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #ffffff 0%, #dedede 50%, #b3afb8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      max-width: 900px;
+    }
+
+    .slide-h1 span.highlight {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: var(--gold-glow);
+    }
+
+    .slide-desc {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 1rem auto 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Grid Layouts & Cards */
+    .slide-grid {
+      display: grid;
+      gap: 1.5rem;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .col-2 { grid-template-columns: repeat(2, 1fr); }
+    .col-3 { grid-template-columns: repeat(3, 1fr); }
+    .col-5 { grid-template-columns: repeat(5, 1fr); }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(223, 183, 108, 0.4);
+      background: var(--bg-card-hover);
+      box-shadow: 0 12px 40px 0 rgba(223, 183, 108, 0.08);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      transition: background 0.35s ease;
+    }
+
+    .card.accent-gold::before { background: var(--gold-gradient); }
+    .card.accent-purple::before { background: var(--accent-purple); }
+    .card.accent-red::before { background: var(--accent-red); }
+    .card.accent-green::before { background: var(--accent-green); }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-title svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--gold);
+    }
+
+    .card-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .card-stat {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .card-stat.red { color: var(--accent-red); }
+    .card-stat.green { color: var(--accent-green); }
+
+    /* Custom Presentation Elements */
+    .quote-block {
+      background: rgba(223, 183, 108, 0.04);
+      border-left: 4px solid var(--gold);
+      border-radius: 4px 16px 16px 4px;
+      padding: 1.5rem 2rem;
+      font-style: italic;
+      color: var(--text-main);
+      font-size: 1.15rem;
+      line-height: 1.6;
+      text-align: left;
+      max-width: 800px;
+      margin: 1.5rem auto;
+      position: relative;
+    }
+
+    .quote-author {
+      display: block;
+      font-style: normal;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-top: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Comparison Table Design */
+    .table-container {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: rgba(20, 16, 32, 0.4);
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(223, 183, 108, 0.08);
+      padding: 1.2rem 1.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      color: var(--gold-light);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 1.1rem 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge.red {
+      background: rgba(239, 68, 68, 0.15);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .badge.green {
+      background: rgba(16, 185, 129, 0.15);
+      color: #a7f3d0;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* Process steps flow */
+    .flow-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .flow-step {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-number {
+      width: 32px;
+      height: 32px;
+      background: var(--gold-gradient);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--bg-dark);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin: 0 auto 0.75rem auto;
+      box-shadow: 0 0 10px rgba(223, 183, 108, 0.4);
+    }
+
+    .flow-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .flow-arrow {
+      color: var(--gold);
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* Tab Switcher Interface */
+    .tabs-nav {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      padding: 0.3rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-trigger {
+      padding: 0.6rem 1.5rem;
+      border-radius: 100px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .tab-trigger.active {
+      background: var(--gold-gradient);
+      color: var(--bg-dark);
+      font-weight: 700;
+      box-shadow: var(--gold-glow);
+    }
+
+    .tab-content {
+      width: 100%;
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.35s ease forwards;
+    }
+
+    /* Footer Controls */
+    footer {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 100;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      background: var(--gold-gradient);
+      color: var(--bg-dark);
+      border-color: var(--gold);
+      box-shadow: var(--gold-glow);
+    }
+
+    .nav-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .slide-indicators {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .indicator.active {
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      width: 24px;
+      border-radius: 100px;
+    }
+
+    .progress-bar-container {
+      width: 150px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-left: 1rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--gold-gradient);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+
+    /* Index Nav Menu */
+    .slide-menu {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 320px;
+      height: 100%;
+      background: rgba(13, 9, 24, 0.95);
+      border-left: 1px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide-menu.open {
+      right: 0;
+    }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+    }
+
+    .menu-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      color: var(--gold-light);
+    }
+
+    .menu-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    .menu-close:hover {
+      color: var(--accent-red);
+    }
+
+    .menu-items {
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-right: 0.5rem;
+    }
+
+    /* Custom scrollbar for menu */
+    .menu-items::-webkit-scrollbar {
+      width: 4px;
+    }
+    .menu-items::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .menu-items::-webkit-scrollbar-thumb {
+      background: rgba(223, 183, 108, 0.2);
+      border-radius: 10px;
+    }
+
+    .menu-item {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-align: left;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      transition: all 0.25s ease;
+    }
+
+    .menu-item:hover, .menu-item.active {
+      background: rgba(223, 183, 108, 0.08);
+      border-color: rgba(223, 183, 108, 0.2);
+      color: var(--gold-light);
+    }
+
+    .menu-item.active {
+      border-color: var(--gold);
+      font-weight: 600;
+    }
+
+    .backdrop-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(3px);
+    }
+
+    .backdrop-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Custom visual features */
+    .status-highlight-container {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background: radial-gradient(circle at center, rgba(223, 183, 108, 0.06) 0%, transparent 80%);
+      border: 1px solid rgba(223, 183, 108, 0.15);
+      border-radius: 20px;
+      padding: 2.5rem;
+      width: 100%;
+      text-align: left;
+    }
+
+    .phone-mockup-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .phone-mockup {
+      width: 180px;
+      height: 360px;
+      background: #0f0b18;
+      border: 6px solid #231c34;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px rgba(223, 183, 108, 0.15);
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-notch {
+      width: 80px;
+      height: 14px;
+      background: #231c34;
+      border-radius: 0 0 10px 10px;
+      margin: -1rem auto 0.75rem auto;
+    }
+
+    .phone-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+    }
+
+    .gold-qr-card {
+      border: 1px solid var(--gold);
+      background: linear-gradient(135deg, rgba(223,183,108,0.15) 0%, rgba(13,9,24,0.9) 100%);
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--gold-glow);
+    }
+
+    .phone-qr-svg {
+      width: 90px;
+      height: 90px;
+      fill: var(--gold);
+      background: #ffffff;
+      padding: 0.35rem;
+      border-radius: 8px;
+    }
+
+    .phone-qr-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .phone-qr-sub {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+    }
+
+    .bubble-notification {
+      position: absolute;
+      bottom: 20px;
+      left: -20px;
+      background: rgba(139, 92, 246, 0.95);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.7rem;
+      width: 220px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      animation: float 3s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    /* Keyframe Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Custom visual diagrams for charts */
+    .bar-comparison {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .bar-label {
+      width: 180px;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    .bar-outer {
+      flex: 1;
+      height: 36px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      border-radius: 5px 0 0 5px;
+      width: 0%;
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .bar-inner.purple {
+      background: linear-gradient(90deg, #6d28d9 0%, #8b5cf6 100%);
+    }
+
+    .bar-inner.gold {
+      background: var(--gold-gradient);
+      color: var(--bg-dark);
+    }
+
+    .bar-value {
+      font-family: 'Outfit', sans-serif;
+      margin-left: auto;
+      padding-right: 1rem;
+      font-weight: 800;
+    }
+
+    /* Responsive Overrides */
+    @media (max-width: 900px) {
+      .presentation-container { padding: 1.5rem; }
+      .slide-h1 { font-size: 2.25rem; }
+      .col-2, .col-3, .col-5 { grid-template-columns: 1fr; }
+      .flow-container { flex-direction: column; gap: 1.5rem; }
+      .flow-arrow { transform: rotate(90deg); margin: 0.5rem 0; }
+      .status-highlight-container { flex-direction: column; text-align: center; }
+      .phone-mockup-wrapper { margin-top: 1rem; }
+      .bar-row { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+      .bar-label { text-align: left; width: 100%; }
+      body { overflow: auto; height: auto; }
+      .slide { position: relative; display: none; height: auto; opacity: 1; transform: none; pointer-events: auto; padding: 2rem 0; }
+      .slide.active { display: flex; }
+      .slide-viewport { height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reusable SVG Defs for Gradients/Logos -->
+  <svg style="position: absolute; width: 0; height: 0;" width="0" height="0">
+    <defs>
+      <linearGradient id="goldGradientLogo" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f6dfaf" />
+        <stop offset="50%" stop-color="#dfb76c" />
+        <stop offset="100%" stop-color="#c39241" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="presentation-container">
+    
+    <!-- Top Header Navigation Bar -->
+    <header>
+      <div class="brand-logo">
+        <!-- Luxury glass cup with bottle vector -->
+        <svg viewBox="0 0 24 24">
+          <path d="M7 2h10v2H7V2zm11 5v4c0 3.31-2.69 6-6 6s-6-2.69-6-6V7h12m1-2H5v2h14V5zm-4 13h-2v3h4v-1h-2v-2zm-6 0v2H6v1h4v-3H9z" />
+        </svg>
+        <span>MEHFIL</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <span class="deck-badge">Club Owner Pitch</span>
+        <button class="menu-btn" id="menuBtn">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+          </svg>
+          Index
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dynamic Slides Viewport -->
+    <div class="slide-viewport">
+
+      <!-- SLIDE 1: Title -->
+      <section class="slide active" data-slide-index="0">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">REVENUE & RETENTION INFRASTRUCTURE</span>
+          <h1 class="slide-h1">Stop Losing Customers After <span class="highlight">One Visit.</span></h1>
+          <p class="slide-desc">What if every premium bottle you sell brings the customer back 5 times? Guaranteed.</p>
+        </div>
+        <div class="quote-block" style="text-align: center; max-width: 600px;">
+          "I'm not here to sell you another app. I'm here to show you how to make more money from your existing inventory."
+          <span class="quote-author">Sudarshan Garg — Co-Founder</span>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: Your Reality (The Bleeding) -->
+      <section class="slide" data-slide-index="1">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">THE BRUTAL REALITY</span>
+          <h1 class="slide-h1">You Spent ₹3,000 to Get Him in. <span class="highlight">He Left After 2 Drinks.</span></h1>
+          <p class="slide-desc">You are in the business of creating unforgettable nights. But Monday morning, your customer is gone — and so is your investment.</p>
+        </div>
+        <div class="slide-grid col-5">
+          <div class="card accent-red">
+            <span class="card-stat red">4–9%</span>
+            <h4 class="card-title">Low Margins</h4>
+            <p class="card-text">Razor-thin margins on food & liquor require massive volume.</p>
+          </div>
+          <div class="card accent-red">
+            <span class="card-stat red">~32%</span>
+            <h4 class="card-title">Leaky Funnel</h4>
+            <p class="card-text">68% of new customers walk out and never return.</p>
+          </div>
+          <div class="card accent-red">
+            <span class="card-stat red">₹5K</span>
+            <h4 class="card-title">Extravagant CAC</h4>
+            <p class="card-text">Sky-high customer acquisition cost eats your profits instantly.</p>
+          </div>
+          <div class="card accent-red">
+            <span class="card-stat red">65%↓</span>
+            <h4 class="card-title">Dead Midweeks</h4>
+            <p class="card-text">Midweek footfall drops drastically, leaving tables completely dead.</p>
+          </div>
+          <div class="card accent-red">
+            <span class="card-stat red">Dead</span>
+            <h4 class="card-title">Idle Inventory</h4>
+            <p class="card-text">Premium bottles gather dust, locking up your critical capital.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: The Story (Why This Exists) -->
+      <section class="slide" data-slide-index="2">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">OUR ORIGIN STORY</span>
+          <h1 class="slide-h1">Built by People Who <span class="highlight">Live the Problem.</span></h1>
+        </div>
+        <div class="quote-block">
+          "We went to a club in Bangalore. Had half of 2 premium bottles. Didn't want to carry them home. Club said they'd keep them behind the bar. Two weeks later — same club, same bartender — they had no record of it. We had to buy pegs again at 20% higher cost. We thought: why isn't there a digital passport for this?"
+          <span class="quote-author">Sudarshan Garg — Co-Founder, Mehfil</span>
+        </div>
+        <p class="slide-desc" style="margin-top: 1rem;">That simple frustration is shared by thousands of premium regulars. Mehfil fixes this gap once and for all.</p>
+      </section>
+
+      <!-- SLIDE 4: The MyBottle Solution -->
+      <section class="slide" data-slide-index="3">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">THE MEHFIL SOLUTION</span>
+          <h1 class="slide-h1">Turn Every Bottle into <span class="highlight">5 Guaranteed Visits</span></h1>
+          <p class="slide-desc">Customer reserves a bottle upfront, pays in full, and returns to redeem it across visits. Simple, frictionless, and secure.</p>
+        </div>
+        
+        <div class="flow-container">
+          <div class="flow-step">
+            <div class="flow-number">1</div>
+            <div class="flow-title">Reserve & Pay</div>
+            <p class="card-text" style="font-size: 0.8rem;">Selects brand in-app and pays 100% upfront</p>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <div class="flow-number">2</div>
+            <div class="flow-title">Instant Mapping</div>
+            <p class="card-text" style="font-size: 0.8rem;">5 serving entitlements mapped to user's wallet</p>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <div class="flow-number">3</div>
+            <div class="flow-title">Premium Entry</div>
+            <p class="card-text" style="font-size: 0.8rem;">Generates a dynamic secure golden QR at the bar</p>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <div class="flow-number">4</div>
+            <div class="flow-title">Scan & Pour</div>
+            <p class="card-text" style="font-size: 0.8rem;">Bartender scans QR in 10s and pours the standard serving</p>
+          </div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-step">
+            <div class="flow-number">5</div>
+            <div class="flow-title">Loop Return</div>
+            <p class="card-text" style="font-size: 0.8rem;">4 servings left. They return again and again!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: The Math (You Can't Lose) -->
+      <section class="slide" data-slide-index="4">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">THE ZERO-LOSS MODEL</span>
+          <h1 class="slide-h1">The Only Deal Where the <span class="highlight">Club Always Wins</span></h1>
+          <p class="slide-desc">Whether the customer returns or forgets, your revenue is fully protected.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+          <div class="tabs-nav">
+            <button class="tab-trigger active" onclick="switchTab(event, 'scenarioA')">Scenario A: Customer Returns</button>
+            <button class="tab-trigger" onclick="switchTab(event, 'scenarioB')">Scenario B: Customer Forgets</button>
+          </div>
+
+          <!-- Scenario A Content -->
+          <div id="scenarioA" class="tab-content active">
+            <div class="slide-grid col-3">
+              <div class="card accent-green">
+                <span class="card-stat green">₹5,000</span>
+                <h4 class="card-title">Full Upfront Revenue</h4>
+                <p class="card-text">You collect the full bottle price immediately at reservation.</p>
+              </div>
+              <div class="card accent-green">
+                <span class="card-stat green">5 Visits</span>
+                <h4 class="card-title">Guaranteed Repeat Footfall</h4>
+                <p class="card-text">The customer is locked to your venue for 5 separate visits.</p>
+              </div>
+              <div class="card accent-gold">
+                <span class="card-stat">+₹4,000</span>
+                <h4 class="card-title">Ancillary Upsell Lift</h4>
+                <p class="card-text">Every return visit generates premium spending on high-margin food, water, mixers, and service.</p>
+              </div>
+            </div>
+            <div style="margin-top: 1.5rem; text-align: center; font-weight: 700; color: var(--gold-light);">
+              📈 Total Estimated Club Value: <span style="font-size: 1.5rem; color: var(--accent-green);">₹9,000+</span>
+            </div>
+          </div>
+
+          <!-- Scenario B Content -->
+          <div id="scenarioB" class="tab-content">
+            <div class="slide-grid col-3">
+              <div class="card accent-purple">
+                <span class="card-stat">₹5,000</span>
+                <h4 class="card-title">Revenue Retained</h4>
+                <p class="card-text">You keep the 100% upfront booking cash collected at reservation.</p>
+              </div>
+              <div class="card accent-purple">
+                <span class="card-stat">90 Days</span>
+                <h4 class="card-title">Expiration Trigger</h4>
+                <p class="card-text">Unredeemed servings automatically expire, freeing the commitment.</p>
+              </div>
+              <div class="card accent-gold">
+                <span class="card-stat">100% Stock</span>
+                <h4 class="card-title">Retain & Resell Stock</h4>
+                <p class="card-text">The liquid physical stock stays sitting on your shelf, ready to be sold to a new client.</p>
+              </div>
+            </div>
+            <div style="margin-top: 1.5rem; text-align: center; font-weight: 700; color: var(--gold-light);">
+              🛡️ Pure Profit Breakage: <span style="font-size: 1.5rem; color: var(--gold);">100% Margin Earned</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: Less Work for Your Bartenders -->
+      <section class="slide" data-slide-index="5">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">OPERATIONAL ADVANTAGE</span>
+          <h1 class="slide-h1">Bartender Workload <span class="highlight">Cut in Half.</span></h1>
+          <p class="slide-desc">No cash handling. No physical bill creation. Zero point-of-sale friction during peak weekend hours.</p>
+        </div>
+
+        <div class="bar-comparison">
+          <div class="bar-row">
+            <div class="bar-label">Today's Peg Order (6 Steps)</div>
+            <div class="bar-outer">
+              <div class="bar-inner purple" style="width: 100%;">
+                Order → Price Check → Bill Creation → Pay Process → Pour → End Reconciliation
+              </div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">Mehfil Workflow (3 Steps)</div>
+            <div class="bar-outer">
+              <div class="bar-inner gold" style="width: 50%;">
+                Show Gold QR → Quick Scan → Quick Pour
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote-block" style="text-align: center; max-width: 750px; margin-top: 2rem;">
+          "No billing machine lines. No POS terminal disputes. Dynamic QR validates, decrements, and logs the pour inside 10 seconds."
+        </div>
+      </section>
+
+      <!-- SLIDE 7: Why Customers Love It -->
+      <section class="slide" data-slide-index="6">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">CUSTOMER PSYCHOLOGY</span>
+          <h1 class="slide-h1">The Golden Magic of <span class="highlight">Status Performance</span></h1>
+          <p class="slide-desc">How Mehfil's organic branding loops acquire customers for your club at absolute zero cost.</p>
+        </div>
+
+        <div class="status-highlight-container">
+          <div class="phone-mockup-wrapper">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <div class="phone-screen">
+                <div style="font-family: 'Outfit'; font-size: 0.75rem; font-weight: 700; color: var(--gold);">MEHFIL PASS</div>
+                <div class="gold-qr-card">
+                  <div class="phone-qr-title">Verified Entitlement</div>
+                  <!-- Inline SVG QR Placeholder -->
+                  <svg class="phone-qr-svg" viewBox="0 0 24 24">
+                    <path d="M3 3h8v8H3zm2 2v4h4V5zm11-2h5v5h-5zm2 2v1h1V5zm-13 8h8v8H3zm2 2v4h4v-4zm11-4h3v2h-1v1h1v3h-2v-1h-1v-2h-1v-1h2v-2zm2 5v1h1v-1zm-1 3v1h-1v-1zm2-4h1v1h-1zm-9-9h2v2H7zm0 10h2v2H7zm10-10h2v2h-2z" />
+                  </svg>
+                  <span class="phone-qr-sub">JW Black Label • Servings: 4/5</span>
+                </div>
+                <div style="font-size: 0.55rem; color: var(--text-muted);">Sudarshan Garg • Elite Member</div>
+              </div>
+              <div class="bubble-notification">
+                🥂 <strong>Mehfil Transaction:</strong><br>
+                1 Serving poured at Vapour Bangalore. 4 servings left in your digital wallet.
+              </div>
+            </div>
+          </div>
+
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 1rem;">
+            <h3 style="font-family: 'Outfit'; font-size: 1.5rem; color: var(--gold-light);">The Table Moment</h3>
+            <p class="card-text" style="font-size: 1.05rem;">When a user opens the luxury gold QR at the table, their friends notice. They don't pull out wallets or split bills. They just get served with premium status. </p>
+            <div style="background: rgba(255,255,255,0.03); border: 1px dashed var(--border-color); padding: 1rem; border-radius: 8px;">
+              <strong style="color: var(--gold-light);">"Bro, what app is that?"</strong> — Every scan launches a high-conversion viral loop that brings new upscale spenders straight to your bottle list.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: The Money (Transparent Math) -->
+      <section class="slide" data-slide-index="7">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">ALIGNED ECONOMICS</span>
+          <h1 class="slide-h1">Transparent Math. <span class="highlight">14x Return on Investment.</span></h1>
+          <p class="slide-desc">We only make money when you do. No onboarding setups, zero monthly memberships, complete alignment.</p>
+        </div>
+
+        <div class="table-container" style="max-width: 800px; margin: 0 auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Transaction Flow (₹5,000 Premium Bottle)</th>
+                <th style="text-align: right;">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Customer Prepaid Total (Upfront)</td>
+                <td style="text-align: right; font-weight: 600;">₹5,000</td>
+              </tr>
+              <tr>
+                <td>Mehfil Flat Platform Fee (8%)</td>
+                <td style="text-align: right; color: var(--accent-red);">- ₹400</td>
+              </tr>
+              <tr style="background: rgba(223, 183, 108, 0.04);">
+                <td><strong>Net Settlement Payout (T+1 Directly to Bank)</strong></td>
+                <td style="text-align: right; color: var(--accent-green); font-weight: 700;">₹4,600</td>
+              </tr>
+              <tr>
+                <td>Estimated Bottle Wholesale Cost</td>
+                <td style="text-align: right; color: var(--text-muted);">- ₹3,000</td>
+              </tr>
+              <tr>
+                <td><strong>Liquid Gross Profit Margin</strong></td>
+                <td style="text-align: right; font-weight: 600;">₹1,600</td>
+              </tr>
+              <tr style="border-top: 1px solid var(--border-color);">
+                <td>💡 Plus Estimated Ancillary Spending (4 Return Visits)</td>
+                <td style="text-align: right; color: var(--gold-light); font-weight: 600;">+ ₹4,000</td>
+              </tr>
+              <tr style="background: rgba(223, 183, 108, 0.08); font-size: 1.1rem;">
+                <td><strong>💎 Total Retained Value to Club</strong></td>
+                <td style="text-align: right; color: var(--gold); font-weight: 800;">₹5,600</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: What You Get (Dashboard) -->
+      <section class="slide" data-slide-index="8">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">THE OPERATIONAL BRAIN</span>
+          <h1 class="slide-h1">Full Operational Visibility. <span class="highlight">Zero Guesswork.</span></h1>
+          <p class="slide-desc">Our real-time partner dashboard puts actionable customer data, inventory monitoring, and automatic payouts in your hands.</p>
+        </div>
+        <div class="slide-grid col-3">
+          <div class="card accent-gold">
+            <h4 class="card-title">Real-Time Payouts</h4>
+            <p class="card-text">Monitor every reserved bottle and incoming settlement logs. Integrated directly with Razorpay & Cashfree for frictionless T+1 bank drops.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4 class="card-title">Advanced Expiry Alerts</h4>
+            <p class="card-text">System detects customer reservations near 90-day expiry and pushes automated local prompts. Turns dead liabilities into immediate weekend crowds.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4 class="card-title">Brand & SKU Metrics</h4>
+            <p class="card-text">Track which single malt whiskies, gin brands, or premium vodkas are trending. Optimize purchasing, trim waste, and coordinate distillery sponsorships.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: Trust & Security -->
+      <section class="slide" data-slide-index="9">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">TRUST ARCHITECTURE</span>
+          <h1 class="slide-h1">Built for Complete <span class="highlight">Security & Safety.</span></h1>
+          <p class="slide-desc">Mehfil operates a secure ecosystem engineered to safeguard clubs from losses while maximizing verification trust.</p>
+        </div>
+        <div class="slide-grid col-2">
+          <div class="card accent-green">
+            <h4 class="card-title">🛡️ Ironclad Club Protection</h4>
+            <p class="card-text">Money is collected in full before a single drop of alcohol leaves the bar. Expiration rules are backed by explicit customer Terms of Service, guaranteeing you retain breakage margins safely.</p>
+          </div>
+          <div class="card accent-purple">
+            <h4 class="card-title">🔐 Transparent Customer Ledger</h4>
+            <p class="card-text">Every single scan requires the active, dynamic, time-sensitive QR code on the customer's device. Real-time push alerts confirm exact servings remaining, eliminating bar-side disputes.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: The Community Layer -->
+      <section class="slide" data-slide-index="10">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">THE COMPETITIVE MOAT</span>
+          <h1 class="slide-h1">India's First Verified <span class="highlight">Nightlife Social Layer</span></h1>
+          <p class="slide-desc">Unlike standard booking listings, Mehfil builds active, high-status interest networks that stick to your brand.</p>
+        </div>
+        <div class="slide-grid col-2">
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="card accent-gold">
+              <h4 class="card-title">⭐ Verified Reviews Gating</h4>
+              <p class="card-text">Only users with real, verified redemptions at your venue can write ratings. Stops malicious reviews, removes competitors' spam, and builds authentic prestige.</p>
+            </div>
+            <div class="card accent-gold">
+              <h4 class="card-title">📍 Night Boards Coordination</h4>
+              <p class="card-text">Enables your regular squads to plan, announce, and group-rsvp to your upcoming nights. Organizes crowds natively inside the platform.</p>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="card accent-gold">
+              <h4 class="card-title">🏆 Tiers & Legends Leaderboard</h4>
+              <p class="card-text">Drives gamified competition among top spenders. Bronze, Silver, Gold, and Legend badges award loyal users with bragging rights they post on social media.</p>
+            </div>
+            <div class="card accent-gold">
+              <h4 class="card-title">🍾 Exclusive "The Drop" Releases</h4>
+              <p class="card-text">Promote rare, ultra-premium single malt allocations or customized VIP packages directly to high-intent buyers through weekly premium flashes.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 12: The Close -->
+      <section class="slide" data-slide-index="11">
+        <div class="slide-title-wrapper">
+          <span class="slide-eyebrow">PARTNERSHIP OFFER</span>
+          <h1 class="slide-h1">3-Month Free Pilot. <span class="highlight">Absolute Zero Risk.</span></h1>
+          <p class="slide-desc">Test our system with your regulars. If you don't see a clear bump in return visit retention, walk away with no obligations.</p>
+        </div>
+        <div class="slide-grid col-3" style="margin-bottom: 2rem;">
+          <div class="card accent-green">
+            <h4 class="card-title">🎁 Free Launch Kit</h4>
+            <p class="card-text">Zero platform transaction fees for the first 90 days. We custom-design and print table tents and menus matching your premium aesthetic.</p>
+          </div>
+          <div class="card accent-purple">
+            <h4 class="card-title">⚡ 15-Min Staff Setup</h4>
+            <p class="card-text">Frictionless deployment. Your floor staff and bartenders can be fully certified and operational with our QR scanning workflow in 15 minutes.</p>
+          </div>
+          <div class="card accent-gold">
+            <h4 class="card-title">📈 Transparent Analytics</h4>
+            <p class="card-text">Receive comprehensive monthly reports showing exact reservation volume, retention lift, and weekend-to-weekday spend redistribution.</p>
+          </div>
+        </div>
+        
+        <div style="font-family: 'Outfit'; font-size: 1.15rem; color: var(--gold-light); display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+          <span>📧 partner@mehfil.ing</span>
+          <span>🌐 mehfil.ing/partner</span>
+          <span>📱 +91 98765 43210</span>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Navigation Control Footer -->
+    <footer>
+      <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" aria-label="Previous Slide">
+          <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        
+        <div class="slide-indicators" id="indicators">
+          <!-- Populated by JS -->
+        </div>
+
+        <button class="nav-btn" id="nextBtn" aria-label="Next Slide">
+          <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
+      </div>
+
+      <div style="display: flex; align-items: center;">
+        <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); font-family: 'Outfit';" id="slideCounter">SLIDE 1 / 12</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Sliding Index Menu -->
+  <div class="backdrop-overlay" id="menuBackdrop"></div>
+  <div class="slide-menu" id="slideMenu">
+    <div class="menu-header">
+      <h3 class="menu-title">Presentation Index</h3>
+      <button class="menu-close" id="menuCloseBtn">&times;</button>
+    </div>
+    <div class="menu-items" id="menuItems">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+
+  <script>
+    // State management
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    
+    // UI Elements
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const slideCounter = document.getElementById('slideCounter');
+    const progressBar = document.getElementById('progressBar');
+    const indicatorsContainer = document.getElementById('indicators');
+    const menuBtn = document.getElementById('menuBtn');
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+    const slideMenu = document.getElementById('slideMenu');
+    const menuBackdrop = document.getElementById('menuBackdrop');
+    const menuItemsContainer = document.getElementById('menuItems');
+
+    // Slide Titles for Index Menu
+    const slideTitles = [
+      "The Premium Hook",
+      "The Bleeding Reality",
+      "Our Origin Story",
+      "The 5-Visit Solution",
+      "The Zero-Loss Math",
+      "Bartender Workload",
+      "Status Performance",
+      "Transparent Economics",
+      "Operator Dashboard",
+      "Security & Safety",
+      "The Social Moat",
+      "Partnership Call"
+    ];
+
+    // Initialize Indicators & Menu Items
+    function initPresentation() {
+      // Build slide dots/indicators
+      indicatorsContainer.innerHTML = '';
+      menuItemsContainer.innerHTML = '';
+      
+      for(let i=0; i < totalSlides; i++) {
+        // Dot
+        const indicator = document.createElement('div');
+        indicator.className = `indicator ${i === 0 ? 'active' : ''}`;
+        indicator.setAttribute('data-target-index', i);
+        indicator.addEventListener('click', () => jumpToSlide(i));
+        indicatorsContainer.appendChild(indicator);
+
+        // Sidebar Menu Link
+        const menuItem = document.createElement('button');
+        menuItem.className = `menu-item ${i === 0 ? 'active' : ''}`;
+        menuItem.innerHTML = `<span style="color: var(--gold); font-weight: 700; margin-right: 0.5rem;">${(i + 1).toString().padStart(2, '0')}</span> ${slideTitles[i]}`;
+        menuItem.addEventListener('click', () => {
+          jumpToSlide(i);
+          toggleMenu(false);
+        });
+        menuItemsContainer.appendChild(menuItem);
+      }
+
+      updateUI();
+    }
+
+    // Update active visual elements
+    function updateUI() {
+      // Activate correct slide class
+      slides.forEach((slide, index) => {
+        if(index === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      // Update dots/indicators
+      const indicators = document.querySelectorAll('.indicator');
+      indicators.forEach((dot, index) => {
+        if(index === currentSlide) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+
+      // Update Sidebar Menu Items
+      const menuItems = document.querySelectorAll('.menu-item');
+      menuItems.forEach((item, index) => {
+        if(index === currentSlide) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+
+      // Stats counters & Progress Bar
+      slideCounter.innerText = `SLIDE ${(currentSlide + 1).toString()} / ${totalSlides}`;
+      const progressPercent = ((currentSlide + 1) / totalSlides) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+
+      // Disable/enable boundaries
+      prevBtn.style.opacity = currentSlide === 0 ? '0.3' : '1';
+      prevBtn.style.pointerEvents = currentSlide === 0 ? 'none' : 'auto';
+      
+      nextBtn.style.opacity = currentSlide === totalSlides - 1 ? '0.3' : '1';
+      nextBtn.style.pointerEvents = currentSlide === totalSlides - 1 ? 'none' : 'auto';
+    }
+
+    // Navigation triggers
+    function nextSlide() {
+      if(currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateUI();
+      }
+    }
+
+    function prevSlide() {
+      if(currentSlide > 0) {
+        currentSlide--;
+        updateUI();
+      }
+    }
+
+    function jumpToSlide(index) {
+      if(index >= 0 && index < totalSlides) {
+        currentSlide = index;
+        updateUI();
+      }
+    }
+
+    // Interactive Tab switcher logic (Slide 5)
+    window.switchTab = function(event, tabId) {
+      const parentSlide = event.target.closest('.slide');
+      
+      // Toggle Trigger Active state
+      const triggers = parentSlide.querySelectorAll('.tab-trigger');
+      triggers.forEach(trigger => trigger.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Toggle Target Content state
+      const contents = parentSlide.querySelectorAll('.tab-content');
+      contents.forEach(content => content.classList.remove('active'));
+      parentSlide.querySelector(`#${tabId}`).classList.add('active');
+    }
+
+    // Toggle Index Menu sidebar
+    function toggleMenu(show) {
+      if(show) {
+        slideMenu.classList.add('open');
+        menuBackdrop.classList.add('show');
+      } else {
+        slideMenu.classList.remove('open');
+        menuBackdrop.classList.remove('show');
+      }
+    }
+
+    // Event Listeners binding
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+    
+    menuBtn.addEventListener('click', () => toggleMenu(true));
+    menuCloseBtn.addEventListener('click', () => toggleMenu(false));
+    menuBackdrop.addEventListener('click', () => toggleMenu(false));
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowRight' || e.key === 'Space') {
+        nextSlide();
+      } else if(e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if(e.key === 'Escape') {
+        toggleMenu(false);
+      }
+    });
+
+    // Touch Swipe Navigation for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      if (touchStartX - touchEndX > swipeThreshold) {
+        nextSlide(); // Swiped Left
+      }
+      if (touchEndX - touchStartX > swipeThreshold) {
+        prevSlide(); // Swiped Right
+      }
+    }
+
+    // Bootstrap
+    initPresentation();
+  </script>
+</body>
+</html>

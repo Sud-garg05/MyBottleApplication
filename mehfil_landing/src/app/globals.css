@@ -118,3 +118,19 @@ html, body {
   background-position: right 14px center;
   padding-right: 36px;
 }
+
+/* ✅ Typography Fix: Protect Syne font descenders (especially lowercase 'g') from baseline clipping */
+.font-display, [class*="font-display"], h1, h2, h3 {
+  padding-bottom: 0.18em !important;
+  margin-bottom: -0.18em !important;
+  overflow: visible !important;
+}
+
+/* ✅ Typography Fix: Dedicated logo-font class to prevent 'mehfil.ing' descender trimming */
+.logo-font {
+  display: inline-block !important;
+  line-height: 1.42 !important;
+  padding-bottom: 0.22em !important;
+  margin-bottom: -0.22em !important;
+  overflow: visible !important;
+}

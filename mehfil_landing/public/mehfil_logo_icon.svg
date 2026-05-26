@@ -1,0 +1,29 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#7FFFD4"/>
+<stop offset="100%" stop-color="#00E5B0"/>
+</linearGradient>
+</defs>
+
+<path d="M120 150C70 220 70 330 140 395" stroke="url(#grad)" stroke-width="18" stroke-linecap="round"/>
+<path d="M392 250C410 310 395 365 360 405" stroke="url(#grad)" stroke-width="18" stroke-linecap="round"/>
+
+<path d="M220 90H292V130C292 150 305 170 325 188C345 205 360 235 360 270V320"
+stroke="url(#grad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+
+<path d="M220 90V130C220 150 207 170 187 188C167 205 152 235 152 270V320"
+stroke="url(#grad)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle cx="190" cy="315" r="28" fill="url(#grad)"/>
+<circle cx="256" cy="270" r="28" fill="url(#grad)"/>
+<circle cx="322" cy="315" r="28" fill="url(#grad)"/>
+
+<path d="M205 390C225 350 287 350 307 390" fill="url(#grad)"/>
+
+<path d="M110 370C180 380 205 420 220 470C165 465 125 435 110 370Z" fill="url(#grad)"/>
+<path d="M402 370C332 380 307 420 292 470C347 465 387 435 402 370Z" fill="url(#grad)"/>
+
+<path d="M385 150L392 168L410 175L392 182L385 200L378 182L360 175L378 168L385 150Z" fill="url(#grad)"/>
+<path d="M430 220L435 232L447 237L435 242L430 254L425 242L413 237L425 232L430 220Z" fill="url(#grad)"/>
+</svg>

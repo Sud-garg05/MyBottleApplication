@@ -182,10 +182,22 @@ export default function CTA() {
         <footer className="border-t border-white/[0.04] pt-12 mt-14 text-xs text-gray-500">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start mb-10">
 
-            <div className="md:col-span-5 space-y-2">
-              <span className="font-display font-extrabold text-base text-white">
-                mehfil<span className="text-brand-teal">.ing</span>
-              </span>
+            <div className="md:col-span-5 space-y-3">
+              <div className="flex items-center gap-2.5">
+                <img 
+                  src="/logo.png" 
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.onerror = null;
+                    target.src = "/mehfil_logo_hd.svg";
+                  }}
+                  alt="Mehfil Logo" 
+                  className="w-7 h-7 object-contain filter drop-shadow-[0_2px_8px_rgba(88,255,212,0.2)]" 
+                />
+                <span className="font-display font-extrabold text-base text-white logo-font">
+                  mehfil<span className="text-brand-teal">.ing</span>
+                </span>
+              </div>
               <p className="font-light text-gray-500 max-w-xs leading-relaxed text-xs">
                 The social, identity, and retention infrastructure of modern nightlife. Stamped in Bangalore, India.
               </p>

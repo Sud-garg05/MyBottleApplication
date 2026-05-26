@@ -153,7 +153,7 @@ export default function MagicScroll() {
       {/* 250vh: enough room for 3 clear scroll stages without feeling endless */}
       <div ref={triggerRef} className="relative w-full">
 
-        <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex items-center justify-center">
+        <div className="h-screen overflow-visible flex items-center justify-center">
 
           {/* Ambient grid */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.012)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_50%,#000_60%,transparent_100%)] z-0" />
@@ -165,7 +165,7 @@ export default function MagicScroll() {
             <div className="lg:col-span-7 flex items-center justify-center h-full relative z-20">
 
               {/* Section header — visible at top of sticky pane */}
-              <div className="absolute top-8 left-0 right-0 text-center lg:text-left lg:right-auto lg:w-auto pointer-events-none">
+              <div className="absolute top-24 left-0 right-0 text-center lg:text-left lg:right-auto lg:w-auto pointer-events-none">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-brand-teal inline-flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-brand-teal animate-pulse" />
                   How Mehfil Works
